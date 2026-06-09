@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>3rd Session of the 9th Synod - Offa Diocese</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="loooo.png">
+    <link rel="apple-touch-icon" href="loooo.png">
+    <link rel="shortcut icon" href="loooo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(180deg, #570513 0%, #2c0207 50%, #060102 100%);
+            --card-bg: rgba(22, 14, 15, 0.85);
+            --card-border: rgba(212, 175, 55, 0.2);
+            --gold: #cfa832;
+            --gold-bright: #f4e4a6;
+            --gold-dark: #8b6914;
+            --primary-accent: #7a0c23;
+            --btn-gradient: linear-gradient(135deg, #7a0c23 0%, #a61c38 100%);
+            --text-light: #f3f3f4;
+            --text-muted: #c0b7bb;
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-light);
+            line-height: 1.5;
+            padding: 20px 16px 60px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 580px;
+            margin: 0 auto;
+            padding: 0 12px;
+            width: 100%;
+        }
+
+        section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            text-align: center;
+        }
+        section:nth-of-type(1) { animation-delay: 0.1s; }
+        section:nth-of-type(2) { animation-delay: 0.2s; }
+        section:nth-of-type(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulseGold {
+            0% { box-shadow: 0 0 0 0 rgba(207, 168, 50, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(207, 168, 50, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(207, 168, 50, 0); }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 28px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        .logo-wrapper {
+            display: inline-block;
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+        .logo-wrapper:hover {
+            transform: scale(1.03);
+        }
+        .logo {
+            max-width: 75px;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+        }
+        .communion-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .diocese-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            line-height: 1.3;
+            text-align: center;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .synod-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .countdown-section {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .section-tag {
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 600;
+        }
+        .countdown-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .countdown-card {
+            background: rgba(22, 14, 15, 0.7);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 10px 6px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .countdown-val {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            display: block;
+            line-height: 1.2;
+            text-align: center;
+        }
+        .countdown-unit {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .portal-primary-launcher {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--btn-gradient);
+            color: var(--text-light);
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 14px 28px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(122, 12, 35, 0.4);
+            animation: pulseGold 2s infinite;
+            transition: var(--transition);
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        .portal-primary-launcher:hover {
+            transform: translateY(-2px);
+            border-color: var(--gold-bright);
+        }
+        .top-cta-wrapper, .bottom-cta-wrapper {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .venue-capsule {
+            background: rgba(22, 14, 15, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 40px;
+            padding: 10px 20px;
+            text-align: center;
+            margin: 0 auto 24px auto;
+            max-width: 90%;
+        }
+        .venue-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .venue-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .schedule-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .schedule-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius);
+            padding: 18px 20px;
+            position: relative;
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+            text-align: center;
+        }
+        .schedule-card:hover {
+            border-color: rgba(212, 175, 55, 0.35);
+            transform: translateY(-2px);
+        }
+        .schedule-time-icon {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            color: rgba(212, 175, 55, 0.4);
+            font-size: 0.9rem;
+        }
+        .schedule-day {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+        .schedule-meta {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .schedule-detail-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .schedule-timestamp {
+            font-size: 0.8rem;
+            color: var(--gold-bright);
+            font-weight: 600;
+            text-align: center;
+        }
+        .schedule-desc {
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .info-cards-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .themed-display-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius);
+            padding: 24px 20px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .card-sub-tag {
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+            text-align: center;
+        }
+        .bishop-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            line-height: 1.3;
+            text-align: center;
+        }
+        .bishop-title {
+            font-size: 0.7rem;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .welcome-message {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            max-width: 100%;
+            text-align: center;
+        }
+        .theme-quote-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .theme-reference {
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .scripture-block {
+            font-style: italic;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* OVERLAY STYLES */
+        .portal-page-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .portal-page-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .portal-layout-box {
+            max-width: 500px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .overlay-close-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .payment-details-card {
+            background: linear-gradient(135deg, rgba(122,12,35,0.3), rgba(22,14,15,0.9));
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .payment-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--gold-bright);
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            text-align: center;
+        }
+        .payment-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .payment-meta {
+            text-align: center;
+        }
+        .payment-meta .label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+            text-align: center;
+        }
+        .payment-meta .val {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 600;
+            word-break: break-word;
+            text-align: center;
+        }
+        .payment-meta .val.acc-num {
+            font-family: monospace;
+            font-size: 1rem;
+            color: var(--gold);
+        }
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius);
+            padding: 24px 20px;
+            backdrop-filter: blur(4px);
+        }
+        .form-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+        .field-group {
+            margin-bottom: 18px;
+        }
+        .field-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+        .input-box-wrapper {
+            position: relative;
+        }
+        .input-box-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+        .control-input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            background-color: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .control-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(207,168,50,0.2);
+        }
+        select.control-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23998f93' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 14px;
+            padding-right: 40px;
+        }
+        .gender-row {
+            display: flex;
+            gap: 12px;
+        }
+        .gender-btn-wrapper {
+            flex: 1;
+            position: relative;
+        }
+        .gender-btn-wrapper input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .gender-btn-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .gender-btn-wrapper input[type="radio"]:checked + .gender-btn-label {
+            background: rgba(122,12,35,0.3);
+            border-color: var(--gold);
+            color: var(--gold-bright);
+        }
+        .uploader-zone {
+            border: 1.5px dashed rgba(212,175,55,0.35);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .uploader-zone:hover {
+            border-color: var(--gold);
+            background: rgba(122,12,35,0.1);
+        }
+        .uploader-zone input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .preview-box {
+            display: none;
+            margin-top: 10px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 12px;
+            border-radius: 10px;
+        }
+        .preview-box img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+        }
+        .submit-trigger {
+            width: 100%;
+            padding: 14px;
+            background: var(--btn-gradient);
+            color: var(--text-light);
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+            border: none;
+            margin-top: 10px;
+        }
+        .submit-trigger:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .submit-trigger .btn-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid var(--gold-bright);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* SUCCESS MODAL */
+        .fullpage-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.97);
+            backdrop-filter: blur(12px);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .fullpage-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .success-page-mock {
+            max-width: 480px;
+            width: 100%;
+            background: linear-gradient(145deg, #1a1116 0%, #0f090c 100%);
+            border: 2px solid var(--gold);
+            border-radius: 32px;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(207,168,50,0.2);
+            position: relative;
+        }
+        .fullpage-modal-overlay.active .success-page-mock {
+            transform: scale(1);
+        }
+        .success-page-mock::before {
+            content: "✠ ✠ ✠";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: #1a1116;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            padding: 4px 20px;
+            border-radius: 30px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .success-header {
+            background: linear-gradient(135deg, #0a5a25, #04351a);
+            padding: 32px 20px 24px;
+            text-align: center;
+            position: relative;
+        }
+        .success-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--gold-bright), var(--gold), transparent);
+        }
+        .success-checkmark-icon {
+            font-size: 3.8rem;
+            color: var(--gold-bright);
+            background: rgba(207,168,50,0.15);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            animation: scaleIn 0.5s ease-out;
+            border: 2px solid var(--gold);
+        }
+        .success-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold-bright);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .success-header p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+        }
+        .delegate-name-section {
+            background: linear-gradient(135deg, rgba(207,168,50,0.12), rgba(122,12,35,0.2));
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(207,168,50,0.2);
+        }
+        .delegate-name-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .delegate-full-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            line-height: 1.3;
+            word-break: break-word;
+        }
+        .delegate-id-section {
+            background: rgba(0,0,0,0.4);
+            padding: 14px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(207,168,50,0.12);
+        }
+        .delegate-label-sm {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .delegate-id-number {
+            font-family: 'Cinzel', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            background: rgba(0,0,0,0.4);
+            padding: 5px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+        .info-grid-section {
+            padding: 20px;
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            font-weight: 600;
+            min-width: 110px;
+        }
+        .info-label i {
+            margin-right: 6px;
+            font-size: 0.7rem;
+        }
+        .info-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-light);
+            text-align: right;
+            word-break: break-word;
+            flex: 1;
+        }
+        .church-full-row {
+            background: linear-gradient(135deg, rgba(207,168,50,0.08), rgba(122,12,35,0.1));
+            margin: 0;
+            padding: 16px 20px;
+            border-top: 1px solid rgba(207,168,50,0.15);
+            border-bottom: 1px solid rgba(207,168,50,0.15);
+        }
+        .church-full-row .info-label {
+            min-width: 90px;
+        }
+        .info-value.church-name {
+            font-weight: 600;
+            color: var(--gold-bright);
+            font-style: italic;
+        }
+        .receipt-section {
+            padding: 16px 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+        }
+        .receipt-thumbnail {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--gold);
+            background: #000;
+            margin: 0 auto 8px;
+            display: block;
+        }
+        .receipt-label {
+            font-size: 0.6rem;
+            text-align: center;
+            color: var(--text-muted);
+            display: block;
+        }
+        .modal-action-footer {
+            display: flex;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+        }
+        .action-button-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Cinzel', serif;
+        }
+        .action-button-btn.primary-action {
+            background: var(--btn-gradient);
+            color: white;
+            border: 1px solid var(--gold);
+        }
+        .action-button-btn.secondary-action {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+        }
+        .action-button-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e1a1c;
+            border-left: 4px solid var(--gold);
+            padding: 10px 18px;
+            border-radius: 40px;
+            z-index: 2100;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo-wrapper"><img src="loooo.png" alt="Offa Diocese Seal" class="logo"></div>
+        <p class="communion-tag">Church of Nigeria • Anglican Communion</p>
+        <h1 class="diocese-title">Offa Diocese</h1>
+        <h2 class="synod-title">3rd Session of the 9th Synod</h2>
+    </header>
+
+    <section class="countdown-section">
+        <span class="section-tag">Main Event Commences In</span>
+        <div class="countdown-container" id="synodCountdown">
+            <div class="countdown-card"><span class="countdown-val" id="cd-days">00</span><span class="countdown-unit">Days</span></div>
+            <div class="countdown-card"><span class="countdown-val" id="cd-hours">00</span><span class="countdown-unit">Hours</span></div>
+            <div class="countdown-card"><span class="countdown-val" id="cd-minutes">00</span><span class="countdown-unit">Mins</span></div>
+            <div class="countdown-card"><span class="countdown-val" id="cd-seconds">00</span><span class="countdown-unit">Secs</span></div>
+        </div>
+    </section>
+
+    <div class="top-cta-wrapper">
+        <button class="portal-primary-launcher" onclick="launchRegistrationOverlay()"><span>Register Now</span><i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+    </div>
+
+    <section>
+        <span class="section-tag">Programme of Events</span>
+        <div class="venue-capsule"><div class="venue-label">Venue</div><div class="venue-text">Cathedral Church of St. Mark, Offa</div></div>
+        <div class="schedule-grid">
+            <div class="schedule-card"><i class="fa-regular fa-clock schedule-time-icon"></i><h4 class="schedule-day">Tue 7th - Thu 9th July</h4><p class="schedule-meta">Pre-Synod Revival</p><div class="schedule-detail-row"><span class="schedule-timestamp">4:00pm</span><span class="schedule-desc">Pre Synod Revival Service</span></div></div>
+            <div class="schedule-card" style="border-color: rgba(212,175,55,0.5); background: rgba(122,12,35,0.2);"><i class="fa-solid fa-star schedule-time-icon" style="color:var(--gold);"></i><h4 class="schedule-day">Friday 10th July</h4><p class="schedule-meta" style="color:var(--gold-bright);">Main Opening</p><div class="schedule-detail-row"><span class="schedule-timestamp">10:00am</span><span class="schedule-desc"><strong>Formal Opening of Synod</strong></span></div></div>
+            <div class="schedule-card"><i class="fa-regular fa-clock schedule-time-icon"></i><h4 class="schedule-day">Saturday 11th July</h4><p class="schedule-meta">Main Synod Day</p><div class="schedule-detail-row"><span class="schedule-timestamp">10:00am</span><span class="schedule-desc">Bishop's Charge & Launching</span></div></div>
+            <div class="schedule-card"><i class="fa-regular fa-clock schedule-time-icon"></i><h4 class="schedule-day">Sunday 12th July</h4><p class="schedule-meta">Thanksgiving</p><div class="schedule-detail-row"><span class="schedule-timestamp">10:00am</span><span class="schedule-desc">Synod Thanksgiving Service</span></div></div>
+        </div>
+    </section>
+
+    <section>
+        <div class="info-cards-stack">
+            <div class="themed-display-card"><span class="card-sub-tag">Diocesan Bishop</span><h4 class="bishop-name">Rt. Rev. Dr. Solomon Olusola Akanbi</h4><p class="bishop-title">Bishop of Offa Diocese</p><p class="welcome-message">and the entire people of Offa Diocese welcome you to the <strong>3rd Session of the 9th Synod</strong></p></div>
+            <div class="themed-display-card"><span class="card-sub-tag">Synod Theme</span><h4 class="theme-quote-heading">“The Hypocrisy of Self Righteousness: A Call to Humility and Love”</h4><span class="theme-reference">— Luke 18:11</span><div class="scripture-block">“The Pharisee stood and prayed thus with himself, God, I thank thee, that I am not as other men are...”<span style="display:block; margin-top:6px;">Luke 18:11 (KJV)</span></div></div>
+        </div>
+    </section>
+
+    <div class="bottom-cta-wrapper">
+        <button class="portal-primary-launcher" onclick="launchRegistrationOverlay()"><span>Register Now</span><i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+    </div>
+</div>
+
+<!-- Registration Overlay -->
+<div id="registrationPageOverlay" class="portal-page-overlay"><div class="portal-layout-box"><button class="overlay-close-btn" onclick="dismissRegistrationOverlay()"><i class="fa-solid fa-arrow-left"></i></button><div class="payment-details-card"><div class="payment-header"><i class="fa-solid fa-building-columns"></i> Payment Details</div><div class="payment-grid"><div class="payment-meta"><span class="label">Bank</span><span class="val">GTBank</span></div><div class="payment-meta"><span class="label">Account No.</span><span class="val acc-num">0152991725</span></div><div class="payment-meta"><span class="label">Account Name</span><span class="val">Oludare Wisdom Ayomie</span></div></div></div><div class="glass-card"><h3 class="form-heading"><i class="fa-solid fa-id-card"></i> Delegate Registration</h3><form id="delegateRegistrationForm"><div class="field-group"><label class="field-label">Full Name</label><div class="input-box-wrapper"><input type="text" id="fullName" class="control-input" placeholder="Title & full name" required><i class="fa-solid fa-user"></i></div></div><div class="field-group"><label class="field-label">Archdeaconry</label><div class="input-box-wrapper"><select id="archdeaconry" class="control-input" onchange="cascadeParishFilter()" required><option value="" disabled selected>Select Archdeaconry</option><option value="Cathedral">Cathedral</option><option value="Holy Trinity Archdeaconry">Holy Trinity Archdeaconry</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select><i class="fa-solid fa-layer-group"></i></div></div><div class="field-group"><label class="field-label">Church</label><div class="input-box-wrapper"><select id="church" class="control-input" required disabled><option value="" disabled selected>Choose Archdeaconry first</option></select><i class="fa-solid fa-church"></i></div></div><div class="field-group"><label class="field-label">Designation</label><div class="input-box-wrapper"><select id="designation" class="control-input" required><option value="" disabled selected>Select Designation</option><option value="Bishop">Bishop</option><option value="Clergy">Clergy</option><option value="Diocesan Official">Diocesan Official</option><option value="Bishop's Nominee">Bishop's Nominee</option><option value="Delegate">Delegate</option></select><i class="fa-solid fa-medal"></i></div></div><div class="field-group"><label class="field-label">Gender</label><div class="gender-row"><div class="gender-btn-wrapper"><input type="radio" id="gMale" name="gender" value="Male" required><div class="gender-btn-label"><i class="fa-solid fa-mars"></i> Male</div></div><div class="gender-btn-wrapper"><input type="radio" id="gFemale" name="gender" value="Female"><div class="gender-btn-label"><i class="fa-solid fa-venus"></i> Female</div></div></div></div><div class="field-group"><label class="field-label">Payment Receipt</label><div class="uploader-zone"><i class="fa-solid fa-file-invoice-dollar"></i><div class="upload-txt-main" style="font-size:0.8rem;">Click to upload receipt</div><input type="file" id="paymentReceipt" accept="image/*" onchange="handleImageUpload(this.files[0])" required></div><div class="preview-box" id="previewContainer"><img id="imagePreview"><span id="fileNameLabel"></span><i class="fa-solid fa-circle-check"></i></div></div><button type="submit" class="submit-trigger" id="submitBtn"><span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i></button></form></div></div></div>
+
+<!-- Success Modal -->
+<div id="successFullPageModal" class="fullpage-modal-overlay">
+    <div class="success-page-mock">
+        <div class="success-header">
+            <div class="success-checkmark-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h3>REGISTRATION SUCCESSFUL</h3>
+            <p>Your profile has been recorded in the Synod database</p>
+        </div>
+        <div class="delegate-name-section">
+            <span class="delegate-name-label"><i class="fa-solid fa-user"></i> DELEGATE NAME</span>
+            <div class="delegate-full-name" id="popBadgeName">Rt. Rev. Dr. John Doe</div>
+        </div>
+        <div class="delegate-id-section">
+            <span class="delegate-label-sm"><i class="fa-solid fa-qrcode"></i> REGISTRATION ID</span>
+            <div class="delegate-id-number" id="popGeneratedId">ODS-98036</div>
+        </div>
+        <div class="info-grid-section">
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-user-tag"></i> DESIGNATION</span><span class="info-value" id="popBadgeDesignation">Clergy</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-venus-mars"></i> GENDER</span><span class="info-value" id="popBadgeGender">Male</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-layer-group"></i> ARCHDEACONRY</span><span class="info-value" id="popBadgeArchdeaconry">OSACO ARCHDEACONRY</span></div>
+        </div>
+        <div class="church-full-row">
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-church"></i> CHURCH</span><span class="info-value church-name" id="popBadgeChurch">Our Saviour Ang. Church, Offa</span></div>
+        </div>
+        <div class="receipt-section" id="receiptPreviewSection" style="display:none;">
+            <img id="popBadgePhoto" class="receipt-thumbnail" alt="Receipt">
+            <span class="receipt-label"><i class="fa-regular fa-receipt"></i> Payment Receipt</span>
+        </div>
+        <div class="modal-action-footer">
+            <button class="action-button-btn primary-action" onclick="dismissSuccessPage()"><i class="fa-solid fa-plus-circle"></i> New Registration</button>
+            <button class="action-button-btn secondary-action" onclick="scrollToHomePortal()"><i class="fa-solid fa-house"></i> Homepage</button>
+        </div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"><i class="fa-solid fa-circle-info"></i> <span id="toastText"></span></div>
+
+<script type="importmap">{ "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js" } }</script>
+<script type="module">
+    import { initializeApp } from "firebase/app";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+    const firebaseConfig = { apiKey: "AIzaSyDB9eQ7gEi18qGTGfge-Outblb8bIMULc0", authDomain: "offa-synod-26-9f367.firebaseapp.com", projectId: "offa-synod-26-9f367", storageBucket: "offa-synod-26-9f367.firebasestorage.app", messagingSenderId: "989482038996", appId: "1:989482038996:web:e7dfc8085a41201d2ded41", measurementId: "G-3N5HC1KR0F" };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    window.db = db; window.addDoc = addDoc; window.collection = collection; window.serverTimestamp = serverTimestamp;
+</script>
+<script>
+    const structuralDataMap = {"Cathedral":["St. Mark's, Offa"],"Holy Trinity Archdeaconry":["Holy Trinity Ang. Church","St. Luke's Ang. Church, Itafa","Church of Pentecost, Atari","Emmanuel Omitayo Memorial Ang. Church, Odoosun","St. John Ang. Church, Olorunkuse","Anglican Church of Transfiguration","Jubilee Ang. Church, Gaa Olomifunfun","St. James Ang. Church"],"IKOTUN-ILE ARCHDEACONRY":["St. Matthew Ang. Church, Ikotun-Ile","St. James Ang. Church, Ojoku","Anglican Church of Ascension, Igbonna","Rose Ekere Memorial Ang. Church, Elesin funfun","St. Matthias Ang. Church, Igbotele","Christ Ang. Church, Yeke","St. John Ang. Church, Ilaji","Anglican Church, Ajagusi","Anglican Church, Olokoto","St. Paul's Ang. Church, Okeoye/Gudugba"],"ILEMONA ARCHDEACONRY":["St. Paul's Ang. Church, Ilemona","All Saints Ang. Church, Irra","St. Mark's Ang. Church, Adinimodo","St. Stephen's Ang. Church, Inaja Maliki","St. Matthew Ang. Church, Ago Aladi"],"OSACO ARCHDEACONRY":["Our Saviour Ang. Church, Offa","All Soul's Ang. Church, Lamodi","Hallelujah Ang. Chapel, Offa","St. Peter's Ang. Church, Lamodi","Anglican Church of Salvation","St. Jude Ang. Church, Enji","Anglican Church of Redemption, Lamodi","St. Philips Ang. Church, Igbawere","Arinola Memorial Ang. Chapel, Offa"]};
+    let base64ReceiptData = "", isSubmitting = false;
+    
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toastMsg');
+        document.getElementById('toastText').innerHTML = msg;
+        toast.style.display = 'flex';
+        toast.style.borderLeftColor = isError ? '#b91c1c' : '#cfa832';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+    
+    function compressImage(file, maxWidth, maxHeight, quality) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    let width = img.width, height = img.height;
+                    if (width > maxWidth) { height = (height * maxWidth) / width; width = maxWidth; }
+                    if (height > maxHeight) { width = (width * maxHeight) / height; height = maxHeight; }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width; canvas.height = height;
+                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', quality));
+                };
+                img.onerror = reject;
+            };
+            reader.onerror = reject;
+        });
+    }
+    
+    async function handleImageUpload(file) {
+        const previewContainer = document.getElementById('previewContainer');
+        const imgPreview = document.getElementById('imagePreview');
+        const fileNameSpan = document.getElementById('fileNameLabel');
+        if (!file) { previewContainer.style.display = 'none'; base64ReceiptData = ""; return; }
+        if (!file.type.match('image.*')) { showToast("Please select a valid image file", true); document.getElementById('paymentReceipt').value = ''; return; }
+        fileNameSpan.textContent = file.name.length > 25 ? file.name.substring(0, 22) + '...' : file.name;
+        try {
+            let quality = 0.7, maxWidth = 800, maxHeight = 800;
+            if (file.size > 1.5 * 1024 * 1024) { quality = 0.5; maxWidth = 600; maxHeight = 600; }
+            const compressedBase64 = await compressImage(file, maxWidth, maxHeight, quality);
+            base64ReceiptData = compressedBase64;
+            imgPreview.src = compressedBase64;
+            previewContainer.style.display = 'flex';
+        } catch(err) { showToast("Error processing image", true); base64ReceiptData = ""; }
+    }
+    
+    function launchRegistrationOverlay() { document.getElementById('registrationPageOverlay').classList.add('active'); document.body.style.overflow = "hidden"; }
+    function dismissRegistrationOverlay() { document.getElementById('registrationPageOverlay').classList.remove('active'); document.body.style.overflow = "auto"; }
+    
+    function runSynodCountdown() { const target = new Date("July 10, 2026 10:00:00").getTime(); function update(){ const diff = target - Date.now(); if(diff<=0){ document.getElementById("synodCountdown").innerHTML="<div style='color:var(--gold); text-align:center;'>Synod is Live</div>"; clearInterval(iv); return; } document.getElementById("cd-days").innerText=String(Math.floor(diff/86400000)).padStart(2,'0'); document.getElementById("cd-hours").innerText=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0'); document.getElementById("cd-minutes").innerText=String(Math.floor((diff%3600000)/60000)).padStart(2,'0'); document.getElementById("cd-seconds").innerText=String(Math.floor((diff%60000)/1000)).padStart(2,'0'); } update(); const iv=setInterval(update,1000); }
+    window.addEventListener('DOMContentLoaded', runSynodCountdown);
+    
+    function cascadeParishFilter() { const arch=document.getElementById("archdeaconry").value, churchSel=document.getElementById("church"); churchSel.innerHTML='<option disabled selected>Select Church</option>'; if(arch && structuralDataMap[arch]){ churchSel.disabled=false; structuralDataMap[arch].forEach(c=>{ const opt=document.createElement("option"); opt.value=c; opt.textContent=c; churchSel.appendChild(opt); }); } else churchSel.disabled=true; }
+    
+    function setButtonLoading(loading){ const btn=document.getElementById('submitBtn'); if(loading){ btn.disabled=true; btn.innerHTML='<span class="btn-spinner"></span><span class="btn-text">Processing...</span>'; } else { btn.disabled=false; btn.innerHTML='<span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i>'; } }
+    
+    window.dispatchFormAction=async function(ev){ 
+        ev.preventDefault(); 
+        if(isSubmitting) return; 
+        const name=document.getElementById('fullName').value; 
+        const arch=document.getElementById('archdeaconry').value; 
+        const church=document.getElementById('church').value; 
+        const des=document.getElementById('designation').value; 
+        const gender=document.querySelector('input[name="gender"]:checked')?.value; 
+        if(!name||!arch||!church||!des){ showToast("Please complete all fields.", true); return; } 
+        if(!base64ReceiptData){ showToast("Please upload payment receipt.", true); return; } 
+        isSubmitting=true; setButtonLoading(true); 
+        const regId="ODS-"+Math.floor(90000+Math.random()*10000); 
+        try{ 
+            await window.addDoc(window.collection(window.db,"synod_delegates"),{ fullName:name, archdeaconry:arch, church:church, designation:des, gender:gender, receiptImageBase64:base64ReceiptData, registrationId:regId, timestamp:window.serverTimestamp(), isDeleted:false });
+            document.getElementById('popBadgeName').innerText = name;
+            document.getElementById('popGeneratedId').innerText=regId; 
+            document.getElementById('popBadgeDesignation').innerText=des; 
+            document.getElementById('popBadgeGender').innerText=gender; 
+            document.getElementById('popBadgeArchdeaconry').innerText=arch; 
+            document.getElementById('popBadgeChurch').innerText=church; 
+            if(base64ReceiptData) { 
+                document.getElementById('popBadgePhoto').src=base64ReceiptData; 
+                document.getElementById('receiptPreviewSection').style.display='block'; 
+            }
+            document.getElementById('successFullPageModal').classList.add('active'); 
+            document.getElementById('registrationPageOverlay').classList.remove('active'); 
+            document.getElementById('delegateRegistrationForm').reset(); 
+            document.getElementById('previewContainer').style.display='none'; 
+            document.getElementById('church').disabled=true; 
+            document.getElementById('church').innerHTML='<option disabled selected>Choose Archdeaconry first</option>'; 
+            base64ReceiptData=""; 
+            showToast("Registration successful! Welcome to Synod 2026.", false);
+        } catch(err){ showToast("Registration failed: "+err.message, true); } 
+        finally{ isSubmitting=false; setButtonLoading(false); } 
+    };
+    
+    window.dismissSuccessPage=function(){ document.getElementById('successFullPageModal').classList.remove('active'); document.body.style.overflow="auto"; };
+    window.scrollToHomePortal=function(){ document.getElementById('successFullPageModal').classList.remove('active'); dismissRegistrationOverlay(); window.scrollTo({top:0,behavior:'smooth'}); };
+    
+    document.getElementById('delegateRegistrationForm').addEventListener('submit',window.dispatchFormAction);
+    window.cascadeParishFilter=cascadeParishFilter;
+    window.handleImageUpload = handleImageUpload;
+    window.launchRegistrationOverlay = launchRegistrationOverlay;
+    window.dismissRegistrationOverlay = dismissRegistrationOverlay;
+</script>
+</body>
+</html>

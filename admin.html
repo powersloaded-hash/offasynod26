@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Offa Synod 2026 | Admin Hub - Soft Delete & Restore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-dark: #0a0507;
+            --card-bg: #141011;
+            --gold: #cfa832;
+            --gold-bright: #f4e4a6;
+            --danger: #b91c1c;
+            --danger-dark: #7f1a1a;
+            --success: #15803d;
+            --warning: #b45309;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border-dim: rgba(207, 168, 50, 0.2);
+            --glow: 0 0 12px rgba(207, 168, 50, 0.3);
+        }
+        body {
+            background: linear-gradient(145deg, #140a0d 0%, #050202 100%);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            padding: 1.5rem 1rem;
+            min-height: 100vh;
+        }
+        .admin-container { max-width: 1480px; margin: 0 auto; }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-dim);
+        }
+        .logo-area h1 { font-family: 'Cinzel', serif; font-size: 1.4rem; background: linear-gradient(135deg, var(--gold-bright), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .logo-area p { font-size: 0.7rem; color: var(--text-secondary); }
+        .stats-badge { background: var(--card-bg); padding: 0.4rem 1rem; border-radius: 40px; border: 1px solid var(--border-dim); font-size: 0.8rem; font-weight: 600; }
+        .stats-badge i { color: var(--gold); margin-right: 6px; }
+        .action-bar {
+            background: rgba(20, 16, 17, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-dim);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .search-box { display: flex; gap: 0.5rem; flex: 2; min-width: 200px; }
+        .search-box input {
+            background: #1e181a;
+            border: 1px solid var(--border-dim);
+            padding: 0.6rem 1rem;
+            border-radius: 40px;
+            color: white;
+            width: 100%;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .search-box input:focus { border-color: var(--gold); box-shadow: var(--glow); }
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #2a2225;
+            color: var(--text-primary);
+        }
+        .btn-primary { background: linear-gradient(105deg, #7a0c23, #a61c38); border: 1px solid var(--gold); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--glow); }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: var(--danger-dark); transform: translateY(-2px); }
+        .btn-success { background: var(--success); }
+        .btn-warning { background: var(--warning); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-dim); }
+        .btn-outline:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-dim);
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        th {
+            text-align: left;
+            padding: 0.8rem 0.8rem;
+            background: #1a1114;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            color: var(--gold);
+            border-bottom: 1px solid var(--border-dim);
+            position: sticky;
+            top: 0;
+        }
+        td { padding: 0.7rem 0.8rem; border-bottom: 1px solid rgba(207, 168, 50, 0.08); vertical-align: middle; }
+        tr:hover td { background: rgba(207, 168, 50, 0.05); }
+        .deleted-row td { background: rgba(185, 28, 28, 0.15); opacity: 0.85; }
+        .group-separator { background: #0e090b; border-top: 2px solid var(--gold); }
+        .group-separator td { background: #0e090b; padding: 0.5rem 0.8rem; font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold-bright); }
+        .subgroup-row td { background: rgba(122, 12, 35, 0.2); font-weight: 500; color: var(--gold); border-left: 3px solid var(--gold); }
+        .receipt-thumb { width: 38px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid var(--gold); cursor: pointer; background: #000; }
+        .action-icons i { font-size: 1rem; margin: 0 4px; cursor: pointer; transition: 0.1s; }
+        .fa-edit { color: #60a5fa; }
+        .fa-trash-alt { color: #f87171; }
+        .fa-trash-restore { color: #10b981; }
+        .fa-trash-permanent { color: #dc2626; }
+        .fa-eye { color: var(--gold); }
+        .checkbox-col { width: 32px; text-align: center; }
+        .checkbox-col input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--gold); }
+        .batch-bar {
+            background: #1e1619;
+            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border: 1px solid var(--border-dim);
+        }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            visibility: hidden; opacity: 0; transition: 0.2s;
+        }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal-card {
+            background: #1b1316; border: 1px solid var(--gold); border-radius: 28px;
+            max-width: 500px; width: 90%; padding: 1.5rem; transform: scale(0.97); transition: 0.2s;
+        }
+        .modal-overlay.active .modal-card { transform: scale(1); }
+        .modal-card h3 { font-family: 'Cinzel', serif; margin-bottom: 1rem; color: var(--gold-bright); }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
+        .form-group input, .form-group select {
+            width: 100%; background: #2a2124; border: 1px solid var(--border-dim);
+            border-radius: 12px; padding: 0.6rem; color: white; font-size: 0.85rem;
+        }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.5rem; }
+        .toast-msg {
+            position: fixed; bottom: 20px; right: 20px; background: #1e1a1c;
+            border-left: 4px solid var(--gold); padding: 10px 18px; border-radius: 12px;
+            z-index: 2100; font-weight: 500; font-size: 0.8rem; display: none;
+        }
+        .tabs { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tab-btn {
+            background: transparent; border: 1px solid var(--border-dim); padding: 6px 18px;
+            border-radius: 40px; cursor: pointer; font-weight: 500; font-size: 0.8rem;
+            transition: 0.2s;
+        }
+        .tab-btn.active { background: var(--gold); color: #0a0507; border-color: var(--gold); }
+        .status-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; }
+        @media (max-width: 760px) {
+            th, td { font-size: 0.7rem; padding: 0.5rem; }
+            .action-icons i { font-size: 0.85rem; margin: 0 2px; }
+            .btn { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="logo-area"><h1><i class="fa-solid fa-crown"></i> SYNOD ADMIN</h1><p>Offa Diocese • 3rd Session 9th Synod</p></div>
+        <div class="stats-badge"><i class="fa-solid fa-users"></i> Active: <span id="activeCount">0</span> | Deleted: <span id="deletedCount">0</span></div>
+    </div>
+
+    <div class="action-bar">
+        <div class="search-box"><i class="fa-solid fa-search" style="align-self:center; color:var(--gold);"></i><input type="text" id="searchInput" placeholder="Search name, ID, church..."></div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button id="createEntryBtn" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> New Entry</button>
+            <button id="exportCsvBtn" class="btn btn-success"><i class="fa-solid fa-download"></i> Export CSV</button>
+            <button id="refreshBtn" class="btn btn-outline"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-view="active">📋 Active Delegates</button>
+        <button class="tab-btn" data-view="deleted">🗑️ Deleted (Restore Available)</button>
+    </div>
+
+    <div id="batchBar" class="batch-bar" style="display: none;">
+        <span><i class="fa-regular fa-square-check"></i> <span id="selectedCount">0</span> selected</span>
+        <button id="batchExportBtn" class="btn btn-success" style="padding: 0.3rem 0.8rem;"><i class="fa-solid fa-file-export"></i> Export</button>
+        <button id="batchDeleteBtn" class="btn btn-danger" style="padding: 0.3rem 0.8rem;"><i class="fa-solid fa-trash-can"></i> Soft Delete</button>
+        <button id="batchRestoreBtn" class="btn btn-warning" style="padding: 0.3rem 0.8rem; background:#2b5e2b;"><i class="fa-solid fa-trash-restore"></i> Restore</button>
+        <button id="batchPermanentDeleteBtn" class="btn" style="background:#7f1a1a; padding:0.3rem 0.8rem;"><i class="fa-solid fa-skull-crossbones"></i> Permanent Delete</button>
+        <button id="clearSelectionBtn" class="btn btn-outline" style="padding: 0.3rem 0.8rem;">Clear</button>
+    </div>
+
+    <div class="table-wrapper">
+        <table id="delegateTable">
+            <thead>
+                <tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Full Name</th><th>Gender</th><th>Archdeaconry</th><th>Church</th><th>Designation</th><th>Receipt</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="tableBody"><tr><td colspan="9" style="text-align:center;">Loading delegate records...</td></tr>
+            </tbody>
+         </table>
+    </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div id="entryModal" class="modal-overlay"><div class="modal-card"><h3 id="modalTitle"><i class="fa-solid fa-user-plus"></i> Create New Delegate</h3>
+<form id="entryForm"><input type="hidden" id="editDocId"><div class="form-group"><label>Full Name</label><input type="text" id="fullName" required></div>
+<div class="form-group"><label>Archdeaconry</label><select id="archdeaconry" required><option value="Cathedral">Cathedral</option><option value="Holy Trinity Archdeaconry">Holy Trinity Archdeaconry</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select></div>
+<div class="form-group"><label>Church</label><input type="text" id="church" required placeholder="Church name"></div>
+<div class="form-group"><label>Designation</label><select id="designation"><option>Bishop</option><option>Clergy</option><option>Diocesan Official</option><option>Bishop's Nominee</option><option>Delegate</option></select></div>
+<div class="form-group"><label>Gender</label><select id="gender"><option>Male</option><option>Female</option></select></div>
+<div class="modal-actions"><button type="button" class="btn btn-outline" id="closeModalBtn">Cancel</button><button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Save</button></div></form></div></div>
+
+<!-- Receipt Modal -->
+<div id="receiptModal" class="modal-overlay"><div class="modal-card" style="max-width:500px; text-align:center;"><h3><i class="fa-regular fa-receipt"></i> Payment Receipt</h3><img id="receiptFullImg" style="width:100%; border-radius: 16px; margin: 15px 0; border:1px solid var(--gold);"><button class="btn btn-outline" id="closeReceiptModal">Close</button></div></div>
+
+<!-- Confirm Permanent Delete Modal -->
+<div id="confirmPermanentModal" class="modal-overlay"><div class="modal-card" style="max-width:400px; text-align:center;"><h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);"></i> Permanent Delete</h3><p style="margin:15px 0; color:var(--text-secondary);">This action <strong>cannot be undone</strong>. The record will be permanently removed from the database.</p><p id="permDeleteCount" style="font-weight:bold; margin-bottom:15px;"></p><div class="modal-actions"><button class="btn btn-outline" id="cancelPermBtn">Cancel</button><button class="btn btn-danger" id="confirmPermBtn">Permanently Delete</button></div></div></div>
+
+<div id="toastMsg" class="toast-msg"><i class="fa-solid fa-circle-info"></i> <span id="toastText"></span></div>
+
+<script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js" } }
+</script>
+<script type="module">
+    import { initializeApp } from "firebase/app";
+    import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc, addDoc, serverTimestamp, query, orderBy } from "firebase/firestore";
+    
+    const firebaseConfig = { apiKey: "AIzaSyDB9eQ7gEi18qGTGfge-Outblb8bIMULc0", authDomain: "offa-synod-26-9f367.firebaseapp.com", projectId: "offa-synod-26-9f367", storageBucket: "offa-synod-26-9f367.firebasestorage.app", messagingSenderId: "989482038996", appId: "1:989482038996:web:e7dfc8085a41201d2ded41", measurementId: "G-3N5HC1KR0F" };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const delegatesCol = collection(db, "synod_delegates");
+
+    let allDelegates = [];
+    let currentView = "active";
+    let selectedIds = new Set();
+    let pendingPermanentIds = [];
+
+    function showToast(msg, isError = false) { 
+        const toast = document.getElementById('toastMsg'); 
+        document.getElementById('toastText').innerHTML = msg; 
+        toast.style.display = 'flex'; 
+        toast.style.borderLeftColor = isError ? '#b91c1c' : '#cfa832'; 
+        setTimeout(() => { toast.style.display = 'none'; }, 3000); 
+    }
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+
+    async function loadDelegates() {
+        try {
+            const snapshot = await getDocs(delegatesCol);
+            allDelegates = [];
+            snapshot.forEach(docSnap => {
+                const data = docSnap.data();
+                allDelegates.push({ 
+                    id: docSnap.id, 
+                    fullName: data.fullName || "N/A", 
+                    gender: data.gender || "", 
+                    archdeaconry: data.archdeaconry || "", 
+                    church: data.church || "", 
+                    designation: data.designation || "", 
+                    registrationId: data.registrationId || "", 
+                    receiptImageBase64: data.receiptImageBase64 || "", 
+                    timestamp: data.timestamp, 
+                    isDeleted: data.isDeleted === true 
+                });
+            });
+            updateStatsAndRender();
+        } catch(err) { console.error(err); showToast("Load error: " + err.message, true); }
+    }
+
+    function updateStatsAndRender() {
+        const activeList = allDelegates.filter(d => !d.isDeleted);
+        const deletedList = allDelegates.filter(d => d.isDeleted);
+        document.getElementById('activeCount').innerText = activeList.length;
+        document.getElementById('deletedCount').innerText = deletedList.length;
+        renderGroupedTable();
+    }
+
+    function sortByArchdeaconryAndChurch(delegatesArray) {
+        const archOrder = ["Cathedral", "Holy Trinity Archdeaconry", "IKOTUN-ILE ARCHDEACONRY", "ILEMONA ARCHDEACONRY", "OSACO ARCHDEACONRY"];
+        return [...delegatesArray].sort((a,b) => {
+            const idxA = archOrder.indexOf(a.archdeaconry || ""), idxB = archOrder.indexOf(b.archdeaconry || "");
+            if(idxA !== idxB) return idxA - idxB;
+            return (a.church || "").toLowerCase().localeCompare((b.church || "").toLowerCase());
+        });
+    }
+
+    function renderGroupedTable() {
+        const filterText = document.getElementById('searchInput').value.toLowerCase();
+        let dataToShow = currentView === "active" ? allDelegates.filter(d => !d.isDeleted) : allDelegates.filter(d => d.isDeleted);
+        if(filterText) dataToShow = dataToShow.filter(d => d.fullName?.toLowerCase().includes(filterText) || d.archdeaconry?.toLowerCase().includes(filterText) || d.church?.toLowerCase().includes(filterText) || d.registrationId?.toLowerCase().includes(filterText));
+        
+        const sorted = sortByArchdeaconryAndChurch(dataToShow);
+        const archMap = new Map();
+        sorted.forEach(d => { const arch = d.archdeaconry || "Uncategorized"; if(!archMap.has(arch)) archMap.set(arch, new Map()); const churchMap = archMap.get(arch); const church = d.church || "Unknown"; if(!churchMap.has(church)) churchMap.set(church, []); churchMap.get(church).push(d); });
+        
+        let html = '';
+        for(let [archName, churchMap] of archMap.entries()) {
+            html += `<tr class="group-separator"><td colspan="9"><i class="fa-solid fa-diocese"></i> ${escapeHtml(archName)} Archdeaconry</td></tr>`;
+            for(let [churchName, delegatesList] of churchMap.entries()) {
+                html += `<tr class="subgroup-row"><td colspan="9"><i class="fa-solid fa-church"></i> ${escapeHtml(churchName)}</td></tr>`;
+                for(let del of delegatesList) {
+                    const isChecked = selectedIds.has(del.id) ? 'checked' : '';
+                    const deletedClass = del.isDeleted ? 'deleted-row' : '';
+                    const receiptImg = (del.receiptImageBase64 && del.receiptImageBase64.startsWith('data:image')) ? del.receiptImageBase64 : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' viewBox='0 0 24 24' fill='none' stroke='%23998f93'%3E%3Crect x='4' y='2' width='16' height='20' rx='2'/%3E%3Cpath d='M8 6h8M8 10h6'/%3E%3C/svg%3E";
+                    html += `<tr class="${deletedClass}" data-id="${del.id}">
+                        <td class="checkbox-col"><input type="checkbox" class="delegate-checkbox" data-id="${del.id}" ${isChecked}></td>
+                        <td style="font-family:monospace;">${escapeHtml(del.registrationId || del.id.slice(0,8))}</td>
+                        <td><strong>${escapeHtml(del.fullName)}</strong></td>
+                        <td>${escapeHtml(del.gender)}</td>
+                        <td>${escapeHtml(del.archdeaconry)}</td>
+                        <td>${escapeHtml(del.church)}</td>
+                        <td>${escapeHtml(del.designation)}</td>
+                        <td><img src="${receiptImg}" class="receipt-thumb" onclick="window.viewReceipt('${del.id}')"></td>
+                        <td class="action-icons">
+                            ${!del.isDeleted ? 
+                                `<i class="fa-solid fa-edit" onclick="window.openEdit('${del.id}')" title="Edit"></i>
+                                 <i class="fa-solid fa-trash-alt" onclick="window.softDelete('${del.id}')" title="Soft Delete"></i>` : 
+                                `<i class="fa-solid fa-trash-restore" onclick="window.restoreDelegate('${del.id}')" title="Restore"></i>
+                                 <i class="fa-solid fa-skull-crossbones" style="color:#dc2626;" onclick="window.promptPermanentDelete('${del.id}')" title="Permanently Delete"></i>`
+                            }
+                        </td>
+                    </tr>`;
+                }
+            }
+        }
+        document.getElementById('tableBody').innerHTML = html || `<tr><td colspan="9" style="text-align:center;">No records found</td></tr>`;
+        document.getElementById('selectAllCheckbox').checked = false;
+        document.getElementById('batchBar').style.display = selectedIds.size > 0 ? 'flex' : 'none';
+        document.getElementById('selectedCount').innerText = selectedIds.size;
+        attachCheckboxEvents();
+    }
+
+    function attachCheckboxEvents() {
+        document.querySelectorAll('.delegate-checkbox').forEach(cb => { cb.onchange = (e) => { const id = cb.dataset.id; if(cb.checked) selectedIds.add(id); else selectedIds.delete(id); updateStatsAndRender(); }; });
+        const selectAll = document.getElementById('selectAllCheckbox');
+        if(selectAll) selectAll.onchange = (e) => { const checkboxes = document.querySelectorAll('.delegate-checkbox'); checkboxes.forEach(cb => { cb.checked = e.target.checked; const id = cb.dataset.id; if(e.target.checked) selectedIds.add(id); else selectedIds.delete(id); }); updateStatsAndRender(); };
+    }
+
+    window.softDelete = async (id) => { 
+        if(confirm("Move to deleted records? This can be restored later.")) { 
+            try { await updateDoc(doc(db, "synod_delegates", id), { isDeleted: true }); showToast("Record moved to deleted bin."); await loadDelegates(); selectedIds.clear(); } catch(e){ showToast(e.message,true); } 
+        } 
+    };
+    
+    window.restoreDelegate = async (id) => { 
+        try { await updateDoc(doc(db, "synod_delegates", id), { isDeleted: false }); showToast("Delegate restored successfully."); await loadDelegates(); selectedIds.clear(); } catch(e){ showToast(e.message,true); } 
+    };
+    
+    window.promptPermanentDelete = (id) => {
+        pendingPermanentIds = [id];
+        document.getElementById('permDeleteCount').innerText = `You are about to permanently delete 1 delegate record.`;
+        document.getElementById('confirmPermanentModal').classList.add('active');
+    };
+    
+    async function executePermanentDelete(ids) {
+        let successCount = 0;
+        for(let id of ids) {
+            try { await deleteDoc(doc(db, "synod_delegates", id)); successCount++; } catch(e){ console.error(e); }
+        }
+        showToast(`Permanently deleted ${successCount} record(s).`, false);
+        await loadDelegates();
+        selectedIds.clear();
+    }
+    
+    window.permanentDeleteSingle = async (id) => {
+        if(confirm("⚠️ PERMANENT DELETE: This action cannot be undone. Continue?")) {
+            try { await deleteDoc(doc(db, "synod_delegates", id)); showToast("Permanently erased from database."); await loadDelegates(); selectedIds.clear(); } catch(e){ showToast(e.message,true); }
+        }
+    };
+    
+    window.openEdit = (id) => { 
+        const d = allDelegates.find(x => x.id === id); 
+        if(!d) return; 
+        document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Edit Delegate'; 
+        document.getElementById('editDocId').value = d.id; 
+        document.getElementById('fullName').value = d.fullName; 
+        document.getElementById('archdeaconry').value = d.archdeaconry; 
+        document.getElementById('church').value = d.church; 
+        document.getElementById('designation').value = d.designation; 
+        document.getElementById('gender').value = d.gender; 
+        document.getElementById('entryModal').classList.add('active'); 
+    };
+    
+    window.viewReceipt = (id) => { 
+        const d = allDelegates.find(x => x.id === id); 
+        const src = (d?.receiptImageBase64 && d.receiptImageBase64.startsWith('data:image')) ? d.receiptImageBase64 : "https://placehold.co/400x300/2c0207/gold?text=No+Receipt"; 
+        document.getElementById('receiptFullImg').src = src; 
+        document.getElementById('receiptModal').classList.add('active'); 
+    };
+
+    document.getElementById('entryForm').addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+        const editId = document.getElementById('editDocId').value;
+        const data = { fullName: document.getElementById('fullName').value, archdeaconry: document.getElementById('archdeaconry').value, church: document.getElementById('church').value, designation: document.getElementById('designation').value, gender: document.getElementById('gender').value, timestamp: serverTimestamp(), isDeleted: false };
+        if(editId) { 
+            try { await updateDoc(doc(db, "synod_delegates", editId), data); showToast("Updated!"); } catch(err){ showToast(err.message,true); } 
+        } else { 
+            try { const regId = "ODS-" + Math.floor(10000+Math.random()*90000); await addDoc(delegatesCol, { ...data, registrationId: regId, receiptImageBase64: "" }); showToast("New delegate created."); } catch(err){ showToast(err.message,true); } 
+        }
+        document.getElementById('entryModal').classList.remove('active'); 
+        document.getElementById('entryForm').reset(); 
+        document.getElementById('editDocId').value = ''; 
+        await loadDelegates();
+    });
+
+    // Batch Actions
+    document.getElementById('batchDeleteBtn').addEventListener('click', async () => { 
+        if(selectedIds.size === 0) return; 
+        if(confirm(`Soft delete ${selectedIds.size} selected delegate(s)?`)) { 
+            for(let id of selectedIds) { try { await updateDoc(doc(db, "synod_delegates", id), { isDeleted: true }); } catch(e){} } 
+            showToast(`${selectedIds.size} delegate(s) soft deleted.`); 
+            selectedIds.clear(); 
+            await loadDelegates(); 
+        } 
+    });
+    
+    document.getElementById('batchRestoreBtn').addEventListener('click', async () => { 
+        if(selectedIds.size === 0) return; 
+        if(confirm(`Restore ${selectedIds.size} delegate(s) from deleted bin?`)) { 
+            for(let id of selectedIds) { try { await updateDoc(doc(db, "synod_delegates", id), { isDeleted: false }); } catch(e){} } 
+            showToast(`${selectedIds.size} delegate(s) restored.`); 
+            selectedIds.clear(); 
+            await loadDelegates(); 
+        } 
+    });
+    
+    document.getElementById('batchPermanentDeleteBtn').addEventListener('click', () => {
+        if(selectedIds.size === 0) return;
+        pendingPermanentIds = Array.from(selectedIds);
+        document.getElementById('permDeleteCount').innerText = `You are about to permanently delete ${selectedIds.size} delegate record(s). This cannot be undone.`;
+        document.getElementById('confirmPermanentModal').classList.add('active');
+    });
+    
+    document.getElementById('confirmPermBtn').addEventListener('click', async () => {
+        await executePermanentDelete(pendingPermanentIds);
+        document.getElementById('confirmPermanentModal').classList.remove('active');
+        pendingPermanentIds = [];
+    });
+    
+    document.getElementById('cancelPermBtn').addEventListener('click', () => {
+        document.getElementById('confirmPermanentModal').classList.remove('active');
+        pendingPermanentIds = [];
+    });
+    
+    document.getElementById('batchExportBtn').addEventListener('click', () => { 
+        if(selectedIds.size === 0) return; 
+        const selectedData = allDelegates.filter(d => selectedIds.has(d.id)); 
+        let csvRows = [["ID","Full Name","Gender","Archdeaconry","Church","Designation","Status"]]; 
+        selectedData.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.gender, d.archdeaconry, d.church, d.designation, d.isDeleted ? "Deleted" : "Active"]); }); 
+        const csv = csvRows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n"); 
+        const blob = new Blob(["\uFEFF"+csv], {type:"text/csv"}); 
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `batch_delegates_export.csv`; a.click(); URL.revokeObjectURL(a.href); showToast("Exported selected records."); 
+    });
+    
+    document.getElementById('clearSelectionBtn').addEventListener('click', () => { selectedIds.clear(); updateStatsAndRender(); });
+    
+    document.getElementById('exportCsvBtn').addEventListener('click', () => { 
+        let dataExport = currentView === "active" ? allDelegates.filter(d => !d.isDeleted) : allDelegates.filter(d => d.isDeleted); 
+        dataExport = sortByArchdeaconryAndChurch(dataExport); 
+        let csvRows = [["ID","Full Name","Gender","Archdeaconry","Church","Designation"]]; 
+        dataExport.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.gender, d.archdeaconry, d.church, d.designation]); }); 
+        const csv = csvRows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n"); 
+        const blob = new Blob(["\uFEFF"+csv], {type:"text/csv"}); 
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `synod_${currentView}_export.csv`; a.click(); URL.revokeObjectURL(a.href); showToast(`Exported ${dataExport.length} records.`); 
+    });
+    
+    document.getElementById('createEntryBtn').addEventListener('click', () => { 
+        document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-user-plus"></i> Create New Delegate'; 
+        document.getElementById('entryForm').reset(); 
+        document.getElementById('editDocId').value = ''; 
+        document.getElementById('entryModal').classList.add('active'); 
+    });
+    
+    document.getElementById('refreshBtn').addEventListener('click', () => loadDelegates());
+    document.getElementById('closeModalBtn').addEventListener('click', () => document.getElementById('entryModal').classList.remove('active'));
+    document.getElementById('closeReceiptModal').addEventListener('click', () => document.getElementById('receiptModal').classList.remove('active'));
+    
+    document.querySelectorAll('.tab-btn').forEach(btn => { 
+        btn.addEventListener('click', (e) => { 
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); 
+            btn.classList.add('active'); 
+            currentView = btn.dataset.view; 
+            selectedIds.clear(); 
+            loadDelegates(); 
+        }); 
+    });
+    
+    document.getElementById('searchInput').addEventListener('input', () => renderGroupedTable());
+    window.onclick = (e) => { if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); };
+    
+    loadDelegates();
+</script>
+</body>
+</html>
