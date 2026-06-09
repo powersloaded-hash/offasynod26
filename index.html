@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>3rd Session of the 9th Synod - Offa Diocese</title>
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="loooo.png">
     <link rel="apple-touch-icon" href="loooo.png">
     <link rel="shortcut icon" href="loooo.png">
@@ -618,20 +617,20 @@
             animation: spin 0.8s linear infinite;
         }
 
-        /* SUCCESS MODAL */
+        /* COMPACT SUCCESS MODAL - FITS ON ONE SCREEN */
         .fullpage-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.97);
+            background: rgba(0,0,0,0.96);
             backdrop-filter: blur(12px);
             z-index: 10001;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -641,154 +640,155 @@
             visibility: visible;
         }
         .success-page-mock {
-            max-width: 480px;
+            max-width: 460px;
             width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
             background: linear-gradient(145deg, #1a1116 0%, #0f090c 100%);
             border: 2px solid var(--gold);
-            border-radius: 32px;
-            overflow: hidden;
+            border-radius: 28px;
             transform: scale(0.95);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(207,168,50,0.2);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.8);
             position: relative;
         }
         .fullpage-modal-overlay.active .success-page-mock {
             transform: scale(1);
         }
+        .success-page-mock::-webkit-scrollbar {
+            width: 3px;
+        }
+        .success-page-mock::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        .success-page-mock::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
         .success-page-mock::before {
-            content: "✠ ✠ ✠";
+            content: "✠";
             position: absolute;
-            top: -12px;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--gold);
             color: #1a1116;
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            padding: 4px 20px;
-            border-radius: 30px;
+            font-size: 0.8rem;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-family: 'Cinzel', serif;
-            font-weight: 600;
-            white-space: nowrap;
+            font-weight: 700;
+            z-index: 2;
         }
         .success-header {
             background: linear-gradient(135deg, #0a5a25, #04351a);
-            padding: 32px 20px 24px;
+            padding: 20px 16px 14px;
             text-align: center;
-            position: relative;
-        }
-        .success-header::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold), var(--gold-bright), var(--gold), transparent);
         }
         .success-checkmark-icon {
-            font-size: 3.8rem;
+            font-size: 2.5rem;
             color: var(--gold-bright);
             background: rgba(207,168,50,0.15);
-            width: 80px;
-            height: 80px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
-            animation: scaleIn 0.5s ease-out;
-            border: 2px solid var(--gold);
+            margin-bottom: 8px;
+            animation: scaleIn 0.4s ease-out;
+            border: 1.5px solid var(--gold);
         }
         .success-header h3 {
             font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.2rem;
+            font-weight: 700;
             color: var(--gold-bright);
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-            text-align: center;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
         }
         .success-header p {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: rgba(255,255,255,0.8);
-            text-align: center;
         }
         .delegate-name-section {
             background: linear-gradient(135deg, rgba(207,168,50,0.12), rgba(122,12,35,0.2));
-            padding: 20px;
+            padding: 12px 16px;
             text-align: center;
-            border-bottom: 1px solid rgba(207,168,50,0.2);
+            border-bottom: 1px solid rgba(207,168,50,0.15);
         }
         .delegate-name-label {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             color: var(--gold);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             font-weight: 600;
         }
         .delegate-full-name {
             font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--gold-bright);
-            line-height: 1.3;
-            word-break: break-word;
+            line-height: 1.25;
         }
         .delegate-id-section {
-            background: rgba(0,0,0,0.4);
-            padding: 14px 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 16px;
             text-align: center;
-            border-bottom: 1px solid rgba(207,168,50,0.12);
+            border-bottom: 1px solid rgba(207,168,50,0.1);
         }
         .delegate-label-sm {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: var(--text-muted);
             display: block;
-            margin-bottom: 6px;
         }
         .delegate-id-number {
             font-family: 'Cinzel', monospace;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--gold-bright);
-            background: rgba(0,0,0,0.4);
-            padding: 5px 16px;
-            border-radius: 40px;
+            background: rgba(0,0,0,0.3);
+            padding: 3px 12px;
+            border-radius: 30px;
             display: inline-block;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .info-grid-section {
-            padding: 20px;
+            padding: 12px 16px;
         }
         .info-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
         }
         .info-row:last-child {
             border-bottom: none;
         }
         .info-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             color: var(--gold);
             font-weight: 600;
-            min-width: 110px;
+            min-width: 95px;
         }
         .info-label i {
-            margin-right: 6px;
-            font-size: 0.7rem;
+            margin-right: 5px;
+            font-size: 0.65rem;
         }
         .info-value {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
             color: var(--text-light);
             text-align: right;
@@ -796,60 +796,38 @@
             flex: 1;
         }
         .church-full-row {
-            background: linear-gradient(135deg, rgba(207,168,50,0.08), rgba(122,12,35,0.1));
-            margin: 0;
-            padding: 16px 20px;
-            border-top: 1px solid rgba(207,168,50,0.15);
-            border-bottom: 1px solid rgba(207,168,50,0.15);
+            background: linear-gradient(135deg, rgba(207,168,50,0.06), rgba(122,12,35,0.08));
+            padding: 10px 16px;
+            border-top: 1px solid rgba(207,168,50,0.12);
+            border-bottom: 1px solid rgba(207,168,50,0.12);
         }
         .church-full-row .info-label {
-            min-width: 90px;
+            min-width: 80px;
         }
         .info-value.church-name {
             font-weight: 600;
             color: var(--gold-bright);
             font-style: italic;
         }
-        .receipt-section {
-            padding: 16px 20px;
-            text-align: center;
-            background: rgba(0,0,0,0.2);
-        }
-        .receipt-thumbnail {
-            width: 55px;
-            height: 55px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 1px solid var(--gold);
-            background: #000;
-            margin: 0 auto 8px;
-            display: block;
-        }
-        .receipt-label {
-            font-size: 0.6rem;
-            text-align: center;
-            color: var(--text-muted);
-            display: block;
-        }
         .modal-action-footer {
             display: flex;
-            gap: 12px;
-            padding: 20px;
+            gap: 10px;
+            padding: 14px 16px;
             background: rgba(0,0,0,0.3);
         }
         .action-button-btn {
             flex: 1;
-            padding: 12px 16px;
+            padding: 8px 12px;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             font-family: 'Cinzel', serif;
         }
         .action-button-btn.primary-action {
@@ -863,7 +841,7 @@
             color: var(--text-muted);
         }
         .action-button-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             filter: brightness(1.05);
         }
         .toast-msg {
@@ -873,11 +851,14 @@
             transform: translateX(-50%);
             background: #1e1a1c;
             border-left: 4px solid var(--gold);
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: 40px;
             z-index: 2100;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             white-space: nowrap;
+            display: none;
+        }
+        .receipt-section {
             display: none;
         }
     </style>
@@ -932,13 +913,13 @@
 <!-- Registration Overlay -->
 <div id="registrationPageOverlay" class="portal-page-overlay"><div class="portal-layout-box"><button class="overlay-close-btn" onclick="dismissRegistrationOverlay()"><i class="fa-solid fa-arrow-left"></i></button><div class="payment-details-card"><div class="payment-header"><i class="fa-solid fa-building-columns"></i> Payment Details</div><div class="payment-grid"><div class="payment-meta"><span class="label">Bank</span><span class="val">GTBank</span></div><div class="payment-meta"><span class="label">Account No.</span><span class="val acc-num">0152991725</span></div><div class="payment-meta"><span class="label">Account Name</span><span class="val">Oludare Wisdom Ayomie</span></div></div></div><div class="glass-card"><h3 class="form-heading"><i class="fa-solid fa-id-card"></i> Delegate Registration</h3><form id="delegateRegistrationForm"><div class="field-group"><label class="field-label">Full Name</label><div class="input-box-wrapper"><input type="text" id="fullName" class="control-input" placeholder="Title & full name" required><i class="fa-solid fa-user"></i></div></div><div class="field-group"><label class="field-label">Archdeaconry</label><div class="input-box-wrapper"><select id="archdeaconry" class="control-input" onchange="cascadeParishFilter()" required><option value="" disabled selected>Select Archdeaconry</option><option value="Cathedral">Cathedral</option><option value="Holy Trinity Archdeaconry">Holy Trinity Archdeaconry</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select><i class="fa-solid fa-layer-group"></i></div></div><div class="field-group"><label class="field-label">Church</label><div class="input-box-wrapper"><select id="church" class="control-input" required disabled><option value="" disabled selected>Choose Archdeaconry first</option></select><i class="fa-solid fa-church"></i></div></div><div class="field-group"><label class="field-label">Designation</label><div class="input-box-wrapper"><select id="designation" class="control-input" required><option value="" disabled selected>Select Designation</option><option value="Bishop">Bishop</option><option value="Clergy">Clergy</option><option value="Diocesan Official">Diocesan Official</option><option value="Bishop's Nominee">Bishop's Nominee</option><option value="Delegate">Delegate</option></select><i class="fa-solid fa-medal"></i></div></div><div class="field-group"><label class="field-label">Gender</label><div class="gender-row"><div class="gender-btn-wrapper"><input type="radio" id="gMale" name="gender" value="Male" required><div class="gender-btn-label"><i class="fa-solid fa-mars"></i> Male</div></div><div class="gender-btn-wrapper"><input type="radio" id="gFemale" name="gender" value="Female"><div class="gender-btn-label"><i class="fa-solid fa-venus"></i> Female</div></div></div></div><div class="field-group"><label class="field-label">Payment Receipt</label><div class="uploader-zone"><i class="fa-solid fa-file-invoice-dollar"></i><div class="upload-txt-main" style="font-size:0.8rem;">Click to upload receipt</div><input type="file" id="paymentReceipt" accept="image/*" onchange="handleImageUpload(this.files[0])" required></div><div class="preview-box" id="previewContainer"><img id="imagePreview"><span id="fileNameLabel"></span><i class="fa-solid fa-circle-check"></i></div></div><button type="submit" class="submit-trigger" id="submitBtn"><span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i></button></form></div></div></div>
 
-<!-- Success Modal -->
+<!-- COMPACT SUCCESS MODAL -->
 <div id="successFullPageModal" class="fullpage-modal-overlay">
     <div class="success-page-mock">
         <div class="success-header">
             <div class="success-checkmark-icon"><i class="fa-solid fa-circle-check"></i></div>
             <h3>REGISTRATION SUCCESSFUL</h3>
-            <p>Your profile has been recorded in the Synod database</p>
+            <p>Your profile has been recorded</p>
         </div>
         <div class="delegate-name-section">
             <span class="delegate-name-label"><i class="fa-solid fa-user"></i> DELEGATE NAME</span>
@@ -951,18 +932,14 @@
         <div class="info-grid-section">
             <div class="info-row"><span class="info-label"><i class="fa-solid fa-user-tag"></i> DESIGNATION</span><span class="info-value" id="popBadgeDesignation">Clergy</span></div>
             <div class="info-row"><span class="info-label"><i class="fa-solid fa-venus-mars"></i> GENDER</span><span class="info-value" id="popBadgeGender">Male</span></div>
-            <div class="info-row"><span class="info-label"><i class="fa-solid fa-layer-group"></i> ARCHDEACONRY</span><span class="info-value" id="popBadgeArchdeaconry">OSACO ARCHDEACONRY</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-layer-group"></i> ARCHDEACONRY</span><span class="info-value" id="popBadgeArchdeaconry">OSACO</span></div>
         </div>
         <div class="church-full-row">
             <div class="info-row"><span class="info-label"><i class="fa-solid fa-church"></i> CHURCH</span><span class="info-value church-name" id="popBadgeChurch">Our Saviour Ang. Church, Offa</span></div>
         </div>
-        <div class="receipt-section" id="receiptPreviewSection" style="display:none;">
-            <img id="popBadgePhoto" class="receipt-thumbnail" alt="Receipt">
-            <span class="receipt-label"><i class="fa-regular fa-receipt"></i> Payment Receipt</span>
-        </div>
         <div class="modal-action-footer">
-            <button class="action-button-btn primary-action" onclick="dismissSuccessPage()"><i class="fa-solid fa-plus-circle"></i> New Registration</button>
-            <button class="action-button-btn secondary-action" onclick="scrollToHomePortal()"><i class="fa-solid fa-house"></i> Homepage</button>
+            <button class="action-button-btn primary-action" onclick="dismissSuccessPage()"><i class="fa-solid fa-plus-circle"></i> New</button>
+            <button class="action-button-btn secondary-action" onclick="scrollToHomePortal()"><i class="fa-solid fa-house"></i> Home</button>
         </div>
     </div>
 </div>
@@ -1059,10 +1036,6 @@
             document.getElementById('popBadgeGender').innerText=gender; 
             document.getElementById('popBadgeArchdeaconry').innerText=arch; 
             document.getElementById('popBadgeChurch').innerText=church; 
-            if(base64ReceiptData) { 
-                document.getElementById('popBadgePhoto').src=base64ReceiptData; 
-                document.getElementById('receiptPreviewSection').style.display='block'; 
-            }
             document.getElementById('successFullPageModal').classList.add('active'); 
             document.getElementById('registrationPageOverlay').classList.remove('active'); 
             document.getElementById('delegateRegistrationForm').reset(); 
