@@ -617,7 +617,7 @@
             animation: spin 0.8s linear infinite;
         }
 
-        /* COMPACT SUCCESS MODAL - FITS ON ONE SCREEN */
+        /* COMPACT SUCCESS MODAL */
         .fullpage-modal-overlay {
             position: fixed;
             top: 0;
@@ -642,7 +642,7 @@
         .success-page-mock {
             max-width: 460px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
             background: linear-gradient(145deg, #1a1116 0%, #0f090c 100%);
             border: 2px solid var(--gold);
@@ -858,9 +858,6 @@
             white-space: nowrap;
             display: none;
         }
-        .receipt-section {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -892,7 +889,7 @@
         <div class="venue-capsule"><div class="venue-label">Venue</div><div class="venue-text">Cathedral Church of St. Mark, Offa</div></div>
         <div class="schedule-grid">
             <div class="schedule-card"><i class="fa-regular fa-clock schedule-time-icon"></i><h4 class="schedule-day">Tue 7th - Thu 9th July</h4><p class="schedule-meta">Pre-Synod Revival</p><div class="schedule-detail-row"><span class="schedule-timestamp">4:00pm</span><span class="schedule-desc">Pre Synod Revival Service</span></div></div>
-            <div class="schedule-card" style="border-color: rgba(212,175,55,0.5); background: rgba(122,12,35,0.2);"><i class="fa-solid fa-star schedule-time-icon" style="color:var(--gold);"></i><h4 class="schedule-day">Friday 10th July</h4><p class="schedule-meta" style="color:var(--gold-bright);">Main Opening</p><div class="schedule-detail-row"><span class="schedule-timestamp">10:00am</span><span class="schedule-desc"><strong>Opening Service of Synod</strong></span></div></div>
+            <div class="schedule-card" style="border-color: rgba(212,175,55,0.5); background: rgba(122,12,35,0.2);"><i class="fa-solid fa-star schedule-time-icon" style="color:var(--gold);"></i><h4 class="schedule-day">Friday 10th July</h4><p class="schedule-meta" style="color:var(--gold-bright);">Main Opening</p><div class="schedule-detail-row"><span class="schedule-timestamp">10:00am</span><span class="schedule-desc"><strong>Formal Opening of Synod</strong></span></div></div>
             <div class="schedule-card"><i class="fa-regular fa-clock schedule-time-icon"></i><h4 class="schedule-day">Saturday 11th July</h4><p class="schedule-meta">Main Synod Day</p><div class="schedule-detail-row"><span class="schedule-timestamp">10:00am</span><span class="schedule-desc">Bishop's Charge & Launching</span></div></div>
             <div class="schedule-card"><i class="fa-regular fa-clock schedule-time-icon"></i><h4 class="schedule-day">Sunday 12th July</h4><p class="schedule-meta">Thanksgiving</p><div class="schedule-detail-row"><span class="schedule-timestamp">10:00am</span><span class="schedule-desc">Synod Thanksgiving Service</span></div></div>
         </div>
@@ -911,7 +908,7 @@
 </div>
 
 <!-- Registration Overlay -->
-<div id="registrationPageOverlay" class="portal-page-overlay"><div class="portal-layout-box"><button class="overlay-close-btn" onclick="dismissRegistrationOverlay()"><i class="fa-solid fa-arrow-left"></i></button><div class="payment-details-card"><div class="payment-header"><i class="fa-solid fa-building-columns"></i> Payment Details</div><div class="payment-grid"><div class="payment-meta"><span class="label">Bank</span><span class="val">GTBank</span></div><div class="payment-meta"><span class="label">Account No.</span><span class="val acc-num">0152991725</span></div><div class="payment-meta"><span class="label">Account Name</span><span class="val">Oludare Wisdom Ayomie</span></div></div></div><div class="glass-card"><h3 class="form-heading"><i class="fa-solid fa-id-card"></i> Delegate Registration</h3><form id="delegateRegistrationForm"><div class="field-group"><label class="field-label">Full Name</label><div class="input-box-wrapper"><input type="text" id="fullName" class="control-input" placeholder="Title & full name" required><i class="fa-solid fa-user"></i></div></div><div class="field-group"><label class="field-label">Archdeaconry</label><div class="input-box-wrapper"><select id="archdeaconry" class="control-input" onchange="cascadeParishFilter()" required><option value="" disabled selected>Select Archdeaconry</option><option value="Cathedral">Cathedral</option><option value="Holy Trinity Archdeaconry">Holy Trinity Archdeaconry</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select><i class="fa-solid fa-layer-group"></i></div></div><div class="field-group"><label class="field-label">Church</label><div class="input-box-wrapper"><select id="church" class="control-input" required disabled><option value="" disabled selected>Choose Archdeaconry first</option></select><i class="fa-solid fa-church"></i></div></div><div class="field-group"><label class="field-label">Designation</label><div class="input-box-wrapper"><select id="designation" class="control-input" required><option value="" disabled selected>Select Designation</option><option value="Bishop">Bishop</option><option value="Clergy">Clergy</option><option value="Diocesan Official">Diocesan Official</option><option value="Bishop's Nominee">Bishop's Nominee</option><option value="Delegate">Delegate</option></select><i class="fa-solid fa-medal"></i></div></div><div class="field-group"><label class="field-label">Gender</label><div class="gender-row"><div class="gender-btn-wrapper"><input type="radio" id="gMale" name="gender" value="Male" required><div class="gender-btn-label"><i class="fa-solid fa-mars"></i> Male</div></div><div class="gender-btn-wrapper"><input type="radio" id="gFemale" name="gender" value="Female"><div class="gender-btn-label"><i class="fa-solid fa-venus"></i> Female</div></div></div></div><div class="field-group"><label class="field-label">Payment Receipt</label><div class="uploader-zone"><i class="fa-solid fa-file-invoice-dollar"></i><div class="upload-txt-main" style="font-size:0.8rem;">Click to upload receipt</div><input type="file" id="paymentReceipt" accept="image/*" onchange="handleImageUpload(this.files[0])" required></div><div class="preview-box" id="previewContainer"><img id="imagePreview"><span id="fileNameLabel"></span><i class="fa-solid fa-circle-check"></i></div></div><button type="submit" class="submit-trigger" id="submitBtn"><span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i></button></form></div></div></div>
+<div id="registrationPageOverlay" class="portal-page-overlay"><div class="portal-layout-box"><button class="overlay-close-btn" onclick="dismissRegistrationOverlay()"><i class="fa-solid fa-arrow-left"></i></button><div class="payment-details-card"><div class="payment-header"><i class="fa-solid fa-building-columns"></i> Payment Details</div><div class="payment-grid"><div class="payment-meta"><span class="label">Bank</span><span class="val">GTBank</span></div><div class="payment-meta"><span class="label">Account No.</span><span class="val acc-num">0152991725</span></div><div class="payment-meta"><span class="label">Account Name</span><span class="val">Oludare Wisdom Ayomie</span></div></div></div><div class="glass-card"><h3 class="form-heading"><i class="fa-solid fa-id-card"></i> Delegate Registration</h3><form id="delegateRegistrationForm"><div class="field-group"><label class="field-label">Full Name</label><div class="input-box-wrapper"><input type="text" id="fullName" class="control-input" placeholder="Title & full name" required><i class="fa-solid fa-user"></i></div></div><div class="field-group"><label class="field-label">Archdeaconry</label><div class="input-box-wrapper"><select id="archdeaconry" class="control-input" onchange="cascadeParishFilter()" required><option value="" disabled selected>Select Archdeaconry</option><option value="CATHEDRAL">CATHEDRAL</option><option value="HOLY TRINITY ARCHDEACONRY">HOLY TRINITY ARCHDEACONRY</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select><i class="fa-solid fa-layer-group"></i></div></div><div class="field-group"><label class="field-label">Church</label><div class="input-box-wrapper"><select id="church" class="control-input" required disabled><option value="" disabled selected>Choose Archdeaconry first</option></select><i class="fa-solid fa-church"></i></div></div><div class="field-group"><label class="field-label">Designation</label><div class="input-box-wrapper"><select id="designation" class="control-input" required><option value="" disabled selected>Select Designation</option><option value="Bishop">Bishop</option><option value="Clergy">Clergy</option><option value="Diocesan Official">Diocesan Official</option><option value="Bishop's Nominee">Bishop's Nominee</option><option value="Delegate">Delegate</option></select><i class="fa-solid fa-medal"></i></div></div><div class="field-group"><label class="field-label">Gender</label><div class="gender-row"><div class="gender-btn-wrapper"><input type="radio" id="gMale" name="gender" value="Male" required><div class="gender-btn-label"><i class="fa-solid fa-mars"></i> Male</div></div><div class="gender-btn-wrapper"><input type="radio" id="gFemale" name="gender" value="Female"><div class="gender-btn-label"><i class="fa-solid fa-venus"></i> Female</div></div></div></div><div class="field-group"><label class="field-label">Payment Receipt</label><div class="uploader-zone"><i class="fa-solid fa-file-invoice-dollar"></i><div class="upload-txt-main" style="font-size:0.8rem;">Click to upload receipt</div><input type="file" id="paymentReceipt" accept="image/*" onchange="handleImageUpload(this.files[0])" required></div><div class="preview-box" id="previewContainer"><img id="imagePreview"><span id="fileNameLabel"></span><i class="fa-solid fa-circle-check"></i></div></div><button type="submit" class="submit-trigger" id="submitBtn"><span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i></button></form></div></div></div>
 
 <!-- COMPACT SUCCESS MODAL -->
 <div id="successFullPageModal" class="fullpage-modal-overlay">
@@ -932,13 +929,13 @@
         <div class="info-grid-section">
             <div class="info-row"><span class="info-label"><i class="fa-solid fa-user-tag"></i> DESIGNATION</span><span class="info-value" id="popBadgeDesignation">Clergy</span></div>
             <div class="info-row"><span class="info-label"><i class="fa-solid fa-venus-mars"></i> GENDER</span><span class="info-value" id="popBadgeGender">Male</span></div>
-            <div class="info-row"><span class="info-label"><i class="fa-solid fa-layer-group"></i> ARCHDEACONRY</span><span class="info-value" id="popBadgeArchdeaconry">OSACO</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-layer-group"></i> ARCHDEACONRY</span><span class="info-value" id="popBadgeArchdeaconry">OSACO ARCHDEACONRY</span></div>
         </div>
         <div class="church-full-row">
             <div class="info-row"><span class="info-label"><i class="fa-solid fa-church"></i> CHURCH</span><span class="info-value church-name" id="popBadgeChurch">Our Saviour Ang. Church, Offa</span></div>
         </div>
         <div class="modal-action-footer">
-            <button class="action-button-btn primary-action" onclick="dismissSuccessPage()"><i class="fa-solid fa-plus-circle"></i> New</button>
+            <button class="action-button-btn primary-action" onclick="newRegistration()"><i class="fa-solid fa-plus-circle"></i> New</button>
             <button class="action-button-btn secondary-action" onclick="scrollToHomePortal()"><i class="fa-solid fa-house"></i> Home</button>
         </div>
     </div>
@@ -956,7 +953,31 @@
     window.db = db; window.addDoc = addDoc; window.collection = collection; window.serverTimestamp = serverTimestamp;
 </script>
 <script>
-    const structuralDataMap = {"Cathedral":["St. Mark's, Offa"],"Holy Trinity Archdeaconry":["Holy Trinity Ang. Church","St. Luke's Ang. Church, Itafa","Church of Pentecost, Atari","Emmanuel Omitayo Memorial Ang. Church, Odoosun","St. John Ang. Church, Olorunkuse","Anglican Church of Transfiguration","Jubilee Ang. Church, Gaa Olomifunfun","St. James Ang. Church"],"IKOTUN-ILE ARCHDEACONRY":["St. Matthew Ang. Church, Ikotun-Ile","St. James Ang. Church, Ojoku","Anglican Church of Ascension, Igbonna","Rose Ekere Memorial Ang. Church, Elesin funfun","St. Matthias Ang. Church, Igbotele","Christ Ang. Church, Yeke","St. John Ang. Church, Ilaji","Anglican Church, Ajagusi","Anglican Church, Olokoto","St. Paul's Ang. Church, Okeoye/Gudugba"],"ILEMONA ARCHDEACONRY":["St. Paul's Ang. Church, Ilemona","All Saints Ang. Church, Irra","St. Mark's Ang. Church, Adinimodo","St. Stephen's Ang. Church, Inaja Maliki","St. Matthew Ang. Church, Ago Aladi"],"OSACO ARCHDEACONRY":["Our Saviour Ang. Church, Offa","All Soul's Ang. Church, Lamodi","Hallelujah Ang. Chapel, Offa","St. Peter's Ang. Church, Lamodi","Anglican Church of Salvation","St. Jude Ang. Church, Enji","Anglican Church of Redemption, Lamodi","St. Philips Ang. Church, Igbawere","Arinola Memorial Ang. Chapel, Offa"]};
+    // Church data with Title Casing for display
+    const churchDataMap = {
+        "CATHEDRAL": ["St. Mark'S, Offa"],
+        "HOLY TRINITY ARCHDEACONRY": [
+            "Holy Trinity Ang. Church", "St. Luke'S Ang. Church, Itafa", "Church of Pentecost, Atari",
+            "Emmanuel Omitayo Memorial Ang. Church, Odoosun", "St. John Ang. Church, Olorunkuse",
+            "Anglican Church of Transfiguration", "Jubilee Ang. Church, Gaa Olomifunfun", "St. James Ang. Church"
+        ],
+        "IKOTUN-ILE ARCHDEACONRY": [
+            "St. Matthew Ang. Church, Ikotun-Ile", "St. James Ang. Church, Ojoku",
+            "Anglican Church of Ascension, Igbonna", "Rose Ekere Memorial Ang. Church, Elesin Funfun",
+            "St. Matthias Ang. Church, Igbotele", "Christ Ang. Church, Yeke", "St. John Ang. Church, Ilaji",
+            "Anglican Church, Ajagusi", "Anglican Church, Olokoto", "St. Paul'S Ang. Church, Okeoye/Gudugba"
+        ],
+        "ILEMONA ARCHDEACONRY": [
+            "St. Paul'S Ang. Church, Ilemona", "All Saints Ang. Church, Irra", "St. Mark'S Ang. Church, Adinimodo",
+            "St. Stephen'S Ang. Church, Inaja Maliki", "St. Matthew Ang. Church, Ago Aladi"
+        ],
+        "OSACO ARCHDEACONRY": [
+            "Our Saviour Ang. Church, Offa", "All Soul'S Ang. Church, Lamodi", "Hallelujah Ang. Chapel, Offa",
+            "St. Peter'S Ang. Church, Lamodi", "Anglican Church of Salvation", "St. Jude Ang. Church, Enji",
+            "Anglican Church of Redemption, Lamodi", "St. Philips Ang. Church, Igbawere", "Arinola Memorial Ang. Chapel, Offa"
+        ]
+    };
+
     let base64ReceiptData = "", isSubmitting = false;
     
     function showToast(msg, isError = false) {
@@ -965,6 +986,13 @@
         toast.style.display = 'flex';
         toast.style.borderLeftColor = isError ? '#b91c1c' : '#cfa832';
         setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+    
+    function toTitleCase(str) {
+        if (!str) return str;
+        return str.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
     }
     
     function compressImage(file, maxWidth, maxHeight, quality) {
@@ -1006,56 +1034,126 @@
         } catch(err) { showToast("Error processing image", true); base64ReceiptData = ""; }
     }
     
-    function launchRegistrationOverlay() { document.getElementById('registrationPageOverlay').classList.add('active'); document.body.style.overflow = "hidden"; }
-    function dismissRegistrationOverlay() { document.getElementById('registrationPageOverlay').classList.remove('active'); document.body.style.overflow = "auto"; }
+    function launchRegistrationOverlay() { 
+        document.getElementById('registrationPageOverlay').classList.add('active'); 
+        document.body.style.overflow = "hidden"; 
+    }
     
-    function runSynodCountdown() { const target = new Date("July 10, 2026 10:00:00").getTime(); function update(){ const diff = target - Date.now(); if(diff<=0){ document.getElementById("synodCountdown").innerHTML="<div style='color:var(--gold); text-align:center;'>Synod is Live</div>"; clearInterval(iv); return; } document.getElementById("cd-days").innerText=String(Math.floor(diff/86400000)).padStart(2,'0'); document.getElementById("cd-hours").innerText=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0'); document.getElementById("cd-minutes").innerText=String(Math.floor((diff%3600000)/60000)).padStart(2,'0'); document.getElementById("cd-seconds").innerText=String(Math.floor((diff%60000)/1000)).padStart(2,'0'); } update(); const iv=setInterval(update,1000); }
+    function dismissRegistrationOverlay() { 
+        document.getElementById('registrationPageOverlay').classList.remove('active'); 
+        document.body.style.overflow = "auto"; 
+    }
+    
+    function runSynodCountdown() { 
+        const target = new Date("July 10, 2026 10:00:00").getTime(); 
+        function update(){ 
+            const diff = target - Date.now(); 
+            if(diff<=0){ 
+                document.getElementById("synodCountdown").innerHTML="<div style='color:var(--gold); text-align:center;'>Synod is Live</div>"; 
+                clearInterval(iv); 
+                return; 
+            } 
+            document.getElementById("cd-days").innerText=String(Math.floor(diff/86400000)).padStart(2,'0'); 
+            document.getElementById("cd-hours").innerText=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0'); 
+            document.getElementById("cd-minutes").innerText=String(Math.floor((diff%3600000)/60000)).padStart(2,'0'); 
+            document.getElementById("cd-seconds").innerText=String(Math.floor((diff%60000)/1000)).padStart(2,'0'); 
+        } 
+        update(); 
+        const iv=setInterval(update,1000); 
+    }
     window.addEventListener('DOMContentLoaded', runSynodCountdown);
     
-    function cascadeParishFilter() { const arch=document.getElementById("archdeaconry").value, churchSel=document.getElementById("church"); churchSel.innerHTML='<option disabled selected>Select Church</option>'; if(arch && structuralDataMap[arch]){ churchSel.disabled=false; structuralDataMap[arch].forEach(c=>{ const opt=document.createElement("option"); opt.value=c; opt.textContent=c; churchSel.appendChild(opt); }); } else churchSel.disabled=true; }
+    function cascadeParishFilter() { 
+        const arch = document.getElementById("archdeaconry").value; 
+        const churchSel = document.getElementById("church"); 
+        churchSel.innerHTML = '<option value="" disabled selected>Select Church</option>'; 
+        if (arch && churchDataMap[arch]) { 
+            churchSel.disabled = false; 
+            churchDataMap[arch].forEach(c => { 
+                const opt = document.createElement("option"); 
+                opt.value = toTitleCase(c); 
+                opt.textContent = toTitleCase(c); 
+                churchSel.appendChild(opt); 
+            }); 
+        } else { 
+            churchSel.disabled = true; 
+        } 
+    }
     
-    function setButtonLoading(loading){ const btn=document.getElementById('submitBtn'); if(loading){ btn.disabled=true; btn.innerHTML='<span class="btn-spinner"></span><span class="btn-text">Processing...</span>'; } else { btn.disabled=false; btn.innerHTML='<span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i>'; } }
+    function setButtonLoading(loading){ 
+        const btn = document.getElementById('submitBtn'); 
+        if(loading){ 
+            btn.disabled = true; 
+            btn.innerHTML = '<span class="btn-spinner"></span><span class="btn-text">Processing...</span>'; 
+        } else { 
+            btn.disabled = false; 
+            btn.innerHTML = '<span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i>'; 
+        } 
+    }
     
-    window.dispatchFormAction=async function(ev){ 
+    function newRegistration() {
+        document.getElementById('successFullPageModal').classList.remove('active');
+        launchRegistrationOverlay();
+    }
+    
+    window.dispatchFormAction = async function(ev){ 
         ev.preventDefault(); 
         if(isSubmitting) return; 
-        const name=document.getElementById('fullName').value; 
-        const arch=document.getElementById('archdeaconry').value; 
-        const church=document.getElementById('church').value; 
-        const des=document.getElementById('designation').value; 
-        const gender=document.querySelector('input[name="gender"]:checked')?.value; 
+        const name = document.getElementById('fullName').value; 
+        const arch = document.getElementById('archdeaconry').value; 
+        const church = document.getElementById('church').value; 
+        const des = document.getElementById('designation').value; 
+        const gender = document.querySelector('input[name="gender"]:checked')?.value; 
         if(!name||!arch||!church||!des){ showToast("Please complete all fields.", true); return; } 
         if(!base64ReceiptData){ showToast("Please upload payment receipt.", true); return; } 
-        isSubmitting=true; setButtonLoading(true); 
-        const regId="ODS-"+Math.floor(90000+Math.random()*10000); 
+        isSubmitting = true; 
+        setButtonLoading(true); 
+        const regId = "ODS-" + Math.floor(90000 + Math.random() * 10000); 
         try{ 
-            await window.addDoc(window.collection(window.db,"synod_delegates"),{ fullName:name, archdeaconry:arch, church:church, designation:des, gender:gender, receiptImageBase64:base64ReceiptData, registrationId:regId, timestamp:window.serverTimestamp(), isDeleted:false });
+            await window.addDoc(window.collection(window.db, "synod_delegates"), { 
+                fullName: name, archdeaconry: arch, church: church, designation: des, 
+                gender: gender, receiptImageBase64: base64ReceiptData, registrationId: regId, 
+                timestamp: window.serverTimestamp(), isDeleted: false 
+            });
             document.getElementById('popBadgeName').innerText = name;
-            document.getElementById('popGeneratedId').innerText=regId; 
-            document.getElementById('popBadgeDesignation').innerText=des; 
-            document.getElementById('popBadgeGender').innerText=gender; 
-            document.getElementById('popBadgeArchdeaconry').innerText=arch; 
-            document.getElementById('popBadgeChurch').innerText=church; 
+            document.getElementById('popGeneratedId').innerText = regId; 
+            document.getElementById('popBadgeDesignation').innerText = des; 
+            document.getElementById('popBadgeGender').innerText = gender; 
+            document.getElementById('popBadgeArchdeaconry').innerText = arch; 
+            document.getElementById('popBadgeChurch').innerText = church; 
             document.getElementById('successFullPageModal').classList.add('active'); 
             document.getElementById('registrationPageOverlay').classList.remove('active'); 
             document.getElementById('delegateRegistrationForm').reset(); 
-            document.getElementById('previewContainer').style.display='none'; 
-            document.getElementById('church').disabled=true; 
-            document.getElementById('church').innerHTML='<option disabled selected>Choose Archdeaconry first</option>'; 
-            base64ReceiptData=""; 
+            document.getElementById('previewContainer').style.display = 'none'; 
+            document.getElementById('church').disabled = true; 
+            document.getElementById('church').innerHTML = '<option value="" disabled selected>Choose Archdeaconry first</option>'; 
+            base64ReceiptData = ""; 
             showToast("Registration successful! Welcome to Synod 2026.", false);
-        } catch(err){ showToast("Registration failed: "+err.message, true); } 
-        finally{ isSubmitting=false; setButtonLoading(false); } 
+        } catch(err){ 
+            showToast("Registration failed: " + err.message, true); 
+        } finally{ 
+            isSubmitting = false; 
+            setButtonLoading(false); 
+        } 
     };
     
-    window.dismissSuccessPage=function(){ document.getElementById('successFullPageModal').classList.remove('active'); document.body.style.overflow="auto"; };
-    window.scrollToHomePortal=function(){ document.getElementById('successFullPageModal').classList.remove('active'); dismissRegistrationOverlay(); window.scrollTo({top:0,behavior:'smooth'}); };
+    window.dismissSuccessPage = function(){ 
+        document.getElementById('successFullPageModal').classList.remove('active'); 
+        document.body.style.overflow = "auto"; 
+    };
     
-    document.getElementById('delegateRegistrationForm').addEventListener('submit',window.dispatchFormAction);
-    window.cascadeParishFilter=cascadeParishFilter;
+    window.scrollToHomePortal = function(){ 
+        document.getElementById('successFullPageModal').classList.remove('active'); 
+        dismissRegistrationOverlay(); 
+        window.scrollTo({top: 0, behavior: 'smooth'}); 
+    };
+    
+    document.getElementById('delegateRegistrationForm').addEventListener('submit', window.dispatchFormAction);
+    window.cascadeParishFilter = cascadeParishFilter;
     window.handleImageUpload = handleImageUpload;
     window.launchRegistrationOverlay = launchRegistrationOverlay;
     window.dismissRegistrationOverlay = dismissRegistrationOverlay;
+    window.newRegistration = newRegistration;
 </script>
 </body>
 </html>
