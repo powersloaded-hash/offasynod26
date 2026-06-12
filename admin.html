@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Offa Synod 2026 | Admin Hub - Soft Delete & Restore</title>
+    <title>Offa Synod 2026 | Admin Hub - Delegate Management</title>
+    <link rel="icon" type="image/png" href="loooo.png">
+    <link rel="apple-touch-icon" href="loooo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -115,13 +117,11 @@
         .group-separator { background: #0e090b; border-top: 2px solid var(--gold); }
         .group-separator td { background: #0e090b; padding: 0.5rem 0.8rem; font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold-bright); }
         .subgroup-row td { background: rgba(122, 12, 35, 0.2); font-weight: 500; color: var(--gold); border-left: 3px solid var(--gold); }
-        .receipt-thumb { width: 38px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid var(--gold); cursor: pointer; background: #000; }
         .action-icons i { font-size: 1rem; margin: 0 4px; cursor: pointer; transition: 0.1s; }
         .fa-edit { color: #60a5fa; }
         .fa-trash-alt { color: #f87171; }
         .fa-trash-restore { color: #10b981; }
         .fa-trash-permanent { color: #dc2626; }
-        .fa-eye { color: var(--gold); }
         .checkbox-col { width: 32px; text-align: center; }
         .checkbox-col input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--gold); }
         .batch-bar {
@@ -167,7 +167,6 @@
             transition: 0.2s;
         }
         .tab-btn.active { background: var(--gold); color: #0a0507; border-color: var(--gold); }
-        .status-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; }
         @media (max-width: 760px) {
             th, td { font-size: 0.7rem; padding: 0.5rem; }
             .action-icons i { font-size: 0.85rem; margin: 0 2px; }
@@ -183,7 +182,7 @@
     </div>
 
     <div class="action-bar">
-        <div class="search-box"><i class="fa-solid fa-search" style="align-self:center; color:var(--gold);"></i><input type="text" id="searchInput" placeholder="Search name, ID, church..."></div>
+        <div class="search-box"><i class="fa-solid fa-search" style="align-self:center; color:var(--gold);"></i><input type="text" id="searchInput" placeholder="Search by name, phone, ID, church..."></div>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button id="createEntryBtn" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> New Entry</button>
             <button id="exportCsvBtn" class="btn btn-success"><i class="fa-solid fa-download"></i> Export CSV</button>
@@ -208,25 +207,25 @@
     <div class="table-wrapper">
         <table id="delegateTable">
             <thead>
-                <tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Full Name</th><th>Gender</th><th>Archdeaconry</th><th>Church</th><th>Designation</th><th>Receipt</th><th>Actions</th></tr>
+                <tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Full Name</th><th>Phone Number</th><th>Gender</th><th>Archdeaconry</th><th>Church</th><th>Designation</th><th>Actions</th></tr>
             </thead>
             <tbody id="tableBody"><tr><td colspan="9" style="text-align:center;">Loading delegate records...</td></tr>
             </tbody>
-         </table>
+        </table>
     </div>
 </div>
 
-<!-- Create/Edit Modal -->
+<!-- Create/Edit Modal (Matches index.html fields) -->
 <div id="entryModal" class="modal-overlay"><div class="modal-card"><h3 id="modalTitle"><i class="fa-solid fa-user-plus"></i> Create New Delegate</h3>
-<form id="entryForm"><input type="hidden" id="editDocId"><div class="form-group"><label>Full Name</label><input type="text" id="fullName" required></div>
-<div class="form-group"><label>Archdeaconry</label><select id="archdeaconry" required><option value="Cathedral">Cathedral</option><option value="Holy Trinity Archdeaconry">Holy Trinity Archdeaconry</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select></div>
+<form id="entryForm"><input type="hidden" id="editDocId">
+<div class="form-group"><label>Full Name</label><input type="text" id="fullName" required placeholder="Title & full name"></div>
+<div class="form-group"><label>Phone Number</label><input type="tel" id="phoneNumber" required placeholder="08031234567"></div>
+<div class="form-group"><label>Archdeaconry</label><select id="archdeaconry" required><option value="">Select Archdeaconry</option><option value="CATHEDRAL">CATHEDRAL</option><option value="HOLY TRINITY ARCHDEACONRY">HOLY TRINITY ARCHDEACONRY</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select></div>
 <div class="form-group"><label>Church</label><input type="text" id="church" required placeholder="Church name"></div>
 <div class="form-group"><label>Designation</label><select id="designation"><option>Bishop</option><option>Clergy</option><option>Diocesan Official</option><option>Bishop's Nominee</option><option>Delegate</option></select></div>
 <div class="form-group"><label>Gender</label><select id="gender"><option>Male</option><option>Female</option></select></div>
-<div class="modal-actions"><button type="button" class="btn btn-outline" id="closeModalBtn">Cancel</button><button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Save</button></div></form></div></div>
-
-<!-- Receipt Modal -->
-<div id="receiptModal" class="modal-overlay"><div class="modal-card" style="max-width:500px; text-align:center;"><h3><i class="fa-regular fa-receipt"></i> Payment Receipt</h3><img id="receiptFullImg" style="width:100%; border-radius: 16px; margin: 15px 0; border:1px solid var(--gold);"><button class="btn btn-outline" id="closeReceiptModal">Close</button></div></div>
+<div class="modal-actions"><button type="button" class="btn btn-outline" id="closeModalBtn">Cancel</button><button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Save</button></div>
+</form></div></div>
 
 <!-- Confirm Permanent Delete Modal -->
 <div id="confirmPermanentModal" class="modal-overlay"><div class="modal-card" style="max-width:400px; text-align:center;"><h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);"></i> Permanent Delete</h3><p style="margin:15px 0; color:var(--text-secondary);">This action <strong>cannot be undone</strong>. The record will be permanently removed from the database.</p><p id="permDeleteCount" style="font-weight:bold; margin-bottom:15px;"></p><div class="modal-actions"><button class="btn btn-outline" id="cancelPermBtn">Cancel</button><button class="btn btn-danger" id="confirmPermBtn">Permanently Delete</button></div></div></div>
@@ -268,12 +267,12 @@
                 allDelegates.push({ 
                     id: docSnap.id, 
                     fullName: data.fullName || "N/A", 
+                    phoneNumber: data.phoneNumber || "",
                     gender: data.gender || "", 
                     archdeaconry: data.archdeaconry || "", 
                     church: data.church || "", 
                     designation: data.designation || "", 
                     registrationId: data.registrationId || "", 
-                    receiptImageBase64: data.receiptImageBase64 || "", 
                     timestamp: data.timestamp, 
                     isDeleted: data.isDeleted === true 
                 });
@@ -291,7 +290,7 @@
     }
 
     function sortByArchdeaconryAndChurch(delegatesArray) {
-        const archOrder = ["Cathedral", "Holy Trinity Archdeaconry", "IKOTUN-ILE ARCHDEACONRY", "ILEMONA ARCHDEACONRY", "OSACO ARCHDEACONRY"];
+        const archOrder = ["CATHEDRAL", "HOLY TRINITY ARCHDEACONRY", "IKOTUN-ILE ARCHDEACONRY", "ILEMONA ARCHDEACONRY", "OSACO ARCHDEACONRY"];
         return [...delegatesArray].sort((a,b) => {
             const idxA = archOrder.indexOf(a.archdeaconry || ""), idxB = archOrder.indexOf(b.archdeaconry || "");
             if(idxA !== idxB) return idxA - idxB;
@@ -302,7 +301,13 @@
     function renderGroupedTable() {
         const filterText = document.getElementById('searchInput').value.toLowerCase();
         let dataToShow = currentView === "active" ? allDelegates.filter(d => !d.isDeleted) : allDelegates.filter(d => d.isDeleted);
-        if(filterText) dataToShow = dataToShow.filter(d => d.fullName?.toLowerCase().includes(filterText) || d.archdeaconry?.toLowerCase().includes(filterText) || d.church?.toLowerCase().includes(filterText) || d.registrationId?.toLowerCase().includes(filterText));
+        if(filterText) dataToShow = dataToShow.filter(d => 
+            d.fullName?.toLowerCase().includes(filterText) || 
+            d.phoneNumber?.toLowerCase().includes(filterText) ||
+            d.archdeaconry?.toLowerCase().includes(filterText) || 
+            d.church?.toLowerCase().includes(filterText) || 
+            d.registrationId?.toLowerCase().includes(filterText)
+        );
         
         const sorted = sortByArchdeaconryAndChurch(dataToShow);
         const archMap = new Map();
@@ -310,22 +315,21 @@
         
         let html = '';
         for(let [archName, churchMap] of archMap.entries()) {
-            html += `<tr class="group-separator"><td colspan="9"><i class="fa-solid fa-diocese"></i> ${escapeHtml(archName)} Archdeaconry</td></tr>`;
+            html += `<tr class="group-separator"><td colspan="9"><i class="fa-solid fa-diocese"></i> ${escapeHtml(archName)}</td></tr>`;
             for(let [churchName, delegatesList] of churchMap.entries()) {
                 html += `<tr class="subgroup-row"><td colspan="9"><i class="fa-solid fa-church"></i> ${escapeHtml(churchName)}</td></tr>`;
                 for(let del of delegatesList) {
                     const isChecked = selectedIds.has(del.id) ? 'checked' : '';
                     const deletedClass = del.isDeleted ? 'deleted-row' : '';
-                    const receiptImg = (del.receiptImageBase64 && del.receiptImageBase64.startsWith('data:image')) ? del.receiptImageBase64 : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' viewBox='0 0 24 24' fill='none' stroke='%23998f93'%3E%3Crect x='4' y='2' width='16' height='20' rx='2'/%3E%3Cpath d='M8 6h8M8 10h6'/%3E%3C/svg%3E";
                     html += `<tr class="${deletedClass}" data-id="${del.id}">
                         <td class="checkbox-col"><input type="checkbox" class="delegate-checkbox" data-id="${del.id}" ${isChecked}></td>
                         <td style="font-family:monospace;">${escapeHtml(del.registrationId || del.id.slice(0,8))}</td>
                         <td><strong>${escapeHtml(del.fullName)}</strong></td>
+                        <td>${escapeHtml(del.phoneNumber)}</td>
                         <td>${escapeHtml(del.gender)}</td>
                         <td>${escapeHtml(del.archdeaconry)}</td>
                         <td>${escapeHtml(del.church)}</td>
                         <td>${escapeHtml(del.designation)}</td>
-                        <td><img src="${receiptImg}" class="receipt-thumb" onclick="window.viewReceipt('${del.id}')"></td>
                         <td class="action-icons">
                             ${!del.isDeleted ? 
                                 `<i class="fa-solid fa-edit" onclick="window.openEdit('${del.id}')" title="Edit"></i>
@@ -334,7 +338,7 @@
                                  <i class="fa-solid fa-skull-crossbones" style="color:#dc2626;" onclick="window.promptPermanentDelete('${del.id}')" title="Permanently Delete"></i>`
                             }
                         </td>
-                    </tr>`;
+                     </tr>`;
                 }
             }
         }
@@ -377,40 +381,37 @@
         selectedIds.clear();
     }
     
-    window.permanentDeleteSingle = async (id) => {
-        if(confirm("⚠️ PERMANENT DELETE: This action cannot be undone. Continue?")) {
-            try { await deleteDoc(doc(db, "synod_delegates", id)); showToast("Permanently erased from database."); await loadDelegates(); selectedIds.clear(); } catch(e){ showToast(e.message,true); }
-        }
-    };
-    
     window.openEdit = (id) => { 
         const d = allDelegates.find(x => x.id === id); 
         if(!d) return; 
         document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Edit Delegate'; 
         document.getElementById('editDocId').value = d.id; 
         document.getElementById('fullName').value = d.fullName; 
+        document.getElementById('phoneNumber').value = d.phoneNumber || "";
         document.getElementById('archdeaconry').value = d.archdeaconry; 
         document.getElementById('church').value = d.church; 
         document.getElementById('designation').value = d.designation; 
         document.getElementById('gender').value = d.gender; 
         document.getElementById('entryModal').classList.add('active'); 
     };
-    
-    window.viewReceipt = (id) => { 
-        const d = allDelegates.find(x => x.id === id); 
-        const src = (d?.receiptImageBase64 && d.receiptImageBase64.startsWith('data:image')) ? d.receiptImageBase64 : "https://placehold.co/400x300/2c0207/gold?text=No+Receipt"; 
-        document.getElementById('receiptFullImg').src = src; 
-        document.getElementById('receiptModal').classList.add('active'); 
-    };
 
     document.getElementById('entryForm').addEventListener('submit', async (e) => {
         e.preventDefault(); 
         const editId = document.getElementById('editDocId').value;
-        const data = { fullName: document.getElementById('fullName').value, archdeaconry: document.getElementById('archdeaconry').value, church: document.getElementById('church').value, designation: document.getElementById('designation').value, gender: document.getElementById('gender').value, timestamp: serverTimestamp(), isDeleted: false };
+        const data = { 
+            fullName: document.getElementById('fullName').value, 
+            phoneNumber: document.getElementById('phoneNumber').value,
+            archdeaconry: document.getElementById('archdeaconry').value, 
+            church: document.getElementById('church').value, 
+            designation: document.getElementById('designation').value, 
+            gender: document.getElementById('gender').value, 
+            timestamp: serverTimestamp(), 
+            isDeleted: false 
+        };
         if(editId) { 
             try { await updateDoc(doc(db, "synod_delegates", editId), data); showToast("Updated!"); } catch(err){ showToast(err.message,true); } 
         } else { 
-            try { const regId = "ODS-" + Math.floor(10000+Math.random()*90000); await addDoc(delegatesCol, { ...data, registrationId: regId, receiptImageBase64: "" }); showToast("New delegate created."); } catch(err){ showToast(err.message,true); } 
+            try { const regId = "ODS-" + Math.floor(10000+Math.random()*90000); await addDoc(delegatesCol, { ...data, registrationId: regId }); showToast("New delegate created."); } catch(err){ showToast(err.message,true); } 
         }
         document.getElementById('entryModal').classList.remove('active'); 
         document.getElementById('entryForm').reset(); 
@@ -460,8 +461,8 @@
     document.getElementById('batchExportBtn').addEventListener('click', () => { 
         if(selectedIds.size === 0) return; 
         const selectedData = allDelegates.filter(d => selectedIds.has(d.id)); 
-        let csvRows = [["ID","Full Name","Gender","Archdeaconry","Church","Designation","Status"]]; 
-        selectedData.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.gender, d.archdeaconry, d.church, d.designation, d.isDeleted ? "Deleted" : "Active"]); }); 
+        let csvRows = [["ID","Full Name","Phone Number","Gender","Archdeaconry","Church","Designation","Status"]]; 
+        selectedData.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.phoneNumber, d.gender, d.archdeaconry, d.church, d.designation, d.isDeleted ? "Deleted" : "Active"]); }); 
         const csv = csvRows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n"); 
         const blob = new Blob(["\uFEFF"+csv], {type:"text/csv"}); 
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `batch_delegates_export.csv`; a.click(); URL.revokeObjectURL(a.href); showToast("Exported selected records."); 
@@ -472,8 +473,8 @@
     document.getElementById('exportCsvBtn').addEventListener('click', () => { 
         let dataExport = currentView === "active" ? allDelegates.filter(d => !d.isDeleted) : allDelegates.filter(d => d.isDeleted); 
         dataExport = sortByArchdeaconryAndChurch(dataExport); 
-        let csvRows = [["ID","Full Name","Gender","Archdeaconry","Church","Designation"]]; 
-        dataExport.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.gender, d.archdeaconry, d.church, d.designation]); }); 
+        let csvRows = [["ID","Full Name","Phone Number","Gender","Archdeaconry","Church","Designation"]]; 
+        dataExport.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.phoneNumber, d.gender, d.archdeaconry, d.church, d.designation]); }); 
         const csv = csvRows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n"); 
         const blob = new Blob(["\uFEFF"+csv], {type:"text/csv"}); 
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `synod_${currentView}_export.csv`; a.click(); URL.revokeObjectURL(a.href); showToast(`Exported ${dataExport.length} records.`); 
@@ -488,7 +489,6 @@
     
     document.getElementById('refreshBtn').addEventListener('click', () => loadDelegates());
     document.getElementById('closeModalBtn').addEventListener('click', () => document.getElementById('entryModal').classList.remove('active'));
-    document.getElementById('closeReceiptModal').addEventListener('click', () => document.getElementById('receiptModal').classList.remove('active'));
     
     document.querySelectorAll('.tab-btn').forEach(btn => { 
         btn.addEventListener('click', (e) => { 
