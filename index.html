@@ -819,7 +819,7 @@
     </div>
 </div>
 
-<!-- Registration Overlay - No Payment Section, No Receipt Upload, Added Phone Number -->
+<!-- Registration Overlay -->
 <div id="registrationPageOverlay" class="portal-page-overlay"><div class="portal-layout-box"><button class="overlay-close-btn" onclick="dismissRegistrationOverlay()"><i class="fa-solid fa-arrow-left"></i></button><div class="glass-card"><h3 class="form-heading"><i class="fa-solid fa-id-card"></i> Delegate Registration</h3><form id="delegateRegistrationForm"><div class="field-group"><label class="field-label">Full Name</label><div class="input-box-wrapper"><input type="text" id="fullName" class="control-input" placeholder="Title & full name" required><i class="fa-solid fa-user"></i></div></div><div class="field-group"><label class="field-label">Phone Number</label><div class="input-box-wrapper"><input type="tel" id="phoneNumber" class="control-input" placeholder="0803 123 4567" required><i class="fa-solid fa-phone"></i></div></div><div class="field-group"><label class="field-label">Archdeaconry</label><div class="input-box-wrapper"><select id="archdeaconry" class="control-input" onchange="cascadeParishFilter()" required><option value="" disabled selected>Select Archdeaconry</option><option value="CATHEDRAL">CATHEDRAL</option><option value="HOLY TRINITY ARCHDEACONRY">HOLY TRINITY ARCHDEACONRY</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select><i class="fa-solid fa-layer-group"></i></div></div><div class="field-group"><label class="field-label">Church</label><div class="input-box-wrapper"><select id="church" class="control-input" required disabled><option value="" disabled selected>Choose Archdeaconry first</option></select><i class="fa-solid fa-church"></i></div></div><div class="field-group"><label class="field-label">Designation</label><div class="input-box-wrapper"><select id="designation" class="control-input" required><option value="" disabled selected>Select Designation</option><option value="Bishop">Bishop</option><option value="Clergy">Clergy</option><option value="Diocesan Official">Diocesan Official</option><option value="Bishop's Nominee">Bishop's Nominee</option><option value="Delegate">Delegate</option></select><i class="fa-solid fa-medal"></i></div></div><div class="field-group"><label class="field-label">Gender</label><div class="gender-row"><div class="gender-btn-wrapper"><input type="radio" id="gMale" name="gender" value="Male" required><div class="gender-btn-label"><i class="fa-solid fa-mars"></i> Male</div></div><div class="gender-btn-wrapper"><input type="radio" id="gFemale" name="gender" value="Female"><div class="gender-btn-label"><i class="fa-solid fa-venus"></i> Female</div></div></div></div><button type="submit" class="submit-trigger" id="submitBtn"><span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i></button></form></div></div></div>
 
 <!-- SUCCESS MODAL -->
@@ -897,7 +897,7 @@
         document.getElementById('toastText').innerHTML = msg;
         toast.style.display = 'flex';
         toast.style.borderLeftColor = isError ? '#b91c1c' : '#cfa832';
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        setTimeout(() => { toast.style.display = 'none'; }, 4000);
     }
     
     function toTitleCase(str) {
@@ -905,6 +905,16 @@
         return str.replace(/\w\S*/g, function(txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
+    }
+    
+    function formatPhoneNumber(phone) {
+        // Remove all spaces and special characters
+        let cleaned = phone.replace(/\s/g, '');
+        // Ensure it starts with 0 for Nigerian format
+        if (cleaned.startsWith('+234')) {
+            cleaned = '0' + cleaned.substring(4);
+        }
+        return cleaned;
     }
     
     function launchRegistrationOverlay() { 
@@ -964,21 +974,34 @@
         } 
     }
     
+    // Check for duplicate using BOTH name AND phone number combination
     async function checkDuplicateRegistration(fullName, phoneNumber) {
         try {
-            const nameQuery = query(window.collection(window.db, "synod_delegates"), window.where("fullName", "==", fullName));
-            const phoneQuery = query(window.collection(window.db, "synod_delegates"), window.where("phoneNumber", "==", phoneNumber));
-            const [nameSnapshot, phoneSnapshot] = await Promise.all([
-                window.getDocs(nameQuery),
-                window.getDocs(phoneQuery)
-            ]);
+            // Normalize the phone number for comparison
+            const normalizedPhone = formatPhoneNumber(phoneNumber);
             
-            if (!nameSnapshot.empty) {
-                return { isDuplicate: true, message: "A delegate with this full name has already registered." };
+            // Query for records with matching name AND phone number
+            const nameQuery = query(
+                window.collection(window.db, "synod_delegates"), 
+                window.where("fullName", "==", fullName),
+                window.where("phoneNumber", "==", normalizedPhone)
+            );
+            
+            const namePhoneSnapshot = await window.getDocs(nameQuery);
+            
+            // Filter out soft-deleted records from results
+            const activeMatches = namePhoneSnapshot.docs.filter(doc => {
+                const data = doc.data();
+                return data.isDeleted !== true;
+            });
+            
+            if (activeMatches.length > 0) {
+                return { 
+                    isDuplicate: true, 
+                    message: "A delegate with this exact name and phone number combination has already been registered. If this is you, please contact the synoc secretariat." 
+                };
             }
-            if (!phoneSnapshot.empty) {
-                return { isDuplicate: true, message: "This phone number has already been used for registration." };
-            }
+            
             return { isDuplicate: false, message: null };
         } catch (err) {
             console.error("Duplicate check error:", err);
@@ -995,30 +1018,31 @@
         ev.preventDefault(); 
         if(isSubmitting) return; 
         const name = document.getElementById('fullName').value.trim(); 
-        const phone = document.getElementById('phoneNumber').value.trim();
+        const phoneRaw = document.getElementById('phoneNumber').value.trim();
         const arch = document.getElementById('archdeaconry').value; 
         const church = document.getElementById('church').value; 
         const des = document.getElementById('designation').value; 
         const gender = document.querySelector('input[name="gender"]:checked')?.value; 
         
         if(!name){ showToast("Please enter your full name.", true); return; } 
-        if(!phone){ showToast("Please enter your phone number.", true); return; }
+        if(!phoneRaw){ showToast("Please enter your phone number.", true); return; }
         if(!arch){ showToast("Please select your archdeaconry.", true); return; } 
         if(!church){ showToast("Please select your church.", true); return; } 
         if(!des){ showToast("Please select your designation.", true); return; } 
         if(!gender){ showToast("Please select your gender.", true); return; }
         
-        // Validate phone number format (basic Nigerian format)
-        const phoneRegex = /^(0[7-9][0-9]{9}|(\+234)[7-9][0-9]{9})$/;
-        if (!phoneRegex.test(phone) && !phoneRegex.test(phone.replace(/\s/g, ''))) {
-            showToast("Please enter a valid phone number (e.g., 08031234567 or +2348031234567)", true);
+        // Format and validate phone number
+        const phone = formatPhoneNumber(phoneRaw);
+        const phoneRegex = /^0[7-9][0-9]{9}$/;
+        if (!phoneRegex.test(phone)) {
+            showToast("Please enter a valid Nigerian phone number (e.g., 08031234567)", true);
             return;
         }
         
         isSubmitting = true; 
         setButtonLoading(true);
         
-        // Check for duplicate registration
+        // Check for duplicate registration using BOTH name AND phone
         const duplicateCheck = await checkDuplicateRegistration(name, phone);
         if (duplicateCheck.isDuplicate) {
             showToast(duplicateCheck.message, true);
@@ -1030,9 +1054,15 @@
         const regId = "ODS-" + Math.floor(90000 + Math.random() * 10000); 
         try{ 
             await window.addDoc(window.collection(window.db, "synod_delegates"), { 
-                fullName: name, phoneNumber: phone, archdeaconry: arch, church: church, 
-                designation: des, gender: gender, registrationId: regId, 
-                timestamp: window.serverTimestamp(), isDeleted: false 
+                fullName: name, 
+                phoneNumber: phone, 
+                archdeaconry: arch, 
+                church: church, 
+                designation: des, 
+                gender: gender, 
+                registrationId: regId, 
+                timestamp: window.serverTimestamp(), 
+                isDeleted: false 
             });
             document.getElementById('popBadgeName').innerText = name;
             document.getElementById('popBadgePhone').innerText = phone;
