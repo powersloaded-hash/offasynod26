@@ -397,54 +397,6 @@
             margin-bottom: 20px;
             transition: var(--transition);
         }
-        .payment-details-card {
-            background: linear-gradient(135deg, rgba(122,12,35,0.3), rgba(22,14,15,0.9));
-            border: 1px solid rgba(212,175,55,0.3);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .payment-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: var(--gold-bright);
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 14px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(212,175,55,0.2);
-            text-align: center;
-        }
-        .payment-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .payment-meta {
-            text-align: center;
-        }
-        .payment-meta .label {
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            display: block;
-            text-align: center;
-        }
-        .payment-meta .val {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 600;
-            word-break: break-word;
-            text-align: center;
-        }
-        .payment-meta .val.acc-num {
-            font-family: monospace;
-            font-size: 1rem;
-            color: var(--gold);
-        }
         .glass-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -546,46 +498,6 @@
             background: rgba(122,12,35,0.3);
             border-color: var(--gold);
             color: var(--gold-bright);
-        }
-        .uploader-zone {
-            border: 1.5px dashed rgba(212,175,55,0.35);
-            padding: 16px;
-            border-radius: 12px;
-            text-align: center;
-            background: rgba(0,0,0,0.2);
-            position: relative;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .uploader-zone:hover {
-            border-color: var(--gold);
-            background: rgba(122,12,35,0.1);
-        }
-        .uploader-zone input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-        .preview-box {
-            display: none;
-            margin-top: 10px;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.05);
-            padding: 8px 12px;
-            border-radius: 10px;
-        }
-        .preview-box img {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid var(--gold);
         }
         .submit-trigger {
             width: 100%;
@@ -907,10 +819,10 @@
     </div>
 </div>
 
-<!-- Registration Overlay -->
-<div id="registrationPageOverlay" class="portal-page-overlay"><div class="portal-layout-box"><button class="overlay-close-btn" onclick="dismissRegistrationOverlay()"><i class="fa-solid fa-arrow-left"></i></button><div class="payment-details-card"><div class="payment-header"><i class="fa-solid fa-building-columns"></i> Payment Details</div><div class="payment-grid"><div class="payment-meta"><span class="label">Bank</span><span class="val">GTBank</span></div><div class="payment-meta"><span class="label">Account No.</span><span class="val acc-num">0152991725</span></div><div class="payment-meta"><span class="label">Account Name</span><span class="val">Oludare Wisdom Ayomide</span></div></div></div><div class="glass-card"><h3 class="form-heading"><i class="fa-solid fa-id-card"></i> Delegate Registration</h3><form id="delegateRegistrationForm"><div class="field-group"><label class="field-label">Full Name</label><div class="input-box-wrapper"><input type="text" id="fullName" class="control-input" placeholder="Title & full name" required><i class="fa-solid fa-user"></i></div></div><div class="field-group"><label class="field-label">Archdeaconry</label><div class="input-box-wrapper"><select id="archdeaconry" class="control-input" onchange="cascadeParishFilter()" required><option value="" disabled selected>Select Archdeaconry</option><option value="CATHEDRAL">CATHEDRAL</option><option value="HOLY TRINITY ARCHDEACONRY">HOLY TRINITY ARCHDEACONRY</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select><i class="fa-solid fa-layer-group"></i></div></div><div class="field-group"><label class="field-label">Church</label><div class="input-box-wrapper"><select id="church" class="control-input" required disabled><option value="" disabled selected>Choose Archdeaconry first</option></select><i class="fa-solid fa-church"></i></div></div><div class="field-group"><label class="field-label">Designation</label><div class="input-box-wrapper"><select id="designation" class="control-input" required><option value="" disabled selected>Select Designation</option><option value="Bishop">Bishop</option><option value="Clergy">Clergy</option><option value="Diocesan Official">Diocesan Official</option><option value="Bishop's Nominee">Bishop's Nominee</option><option value="Delegate">Delegate</option></select><i class="fa-solid fa-medal"></i></div></div><div class="field-group"><label class="field-label">Gender</label><div class="gender-row"><div class="gender-btn-wrapper"><input type="radio" id="gMale" name="gender" value="Male" required><div class="gender-btn-label"><i class="fa-solid fa-mars"></i> Male</div></div><div class="gender-btn-wrapper"><input type="radio" id="gFemale" name="gender" value="Female"><div class="gender-btn-label"><i class="fa-solid fa-venus"></i> Female</div></div></div></div><div class="field-group"><label class="field-label">Payment Receipt</label><div class="uploader-zone"><i class="fa-solid fa-file-invoice-dollar"></i><div class="upload-txt-main" style="font-size:0.8rem;">Click to upload receipt</div><input type="file" id="paymentReceipt" accept="image/*" onchange="handleImageUpload(this.files[0])" required></div><div class="preview-box" id="previewContainer"><img id="imagePreview"><span id="fileNameLabel"></span><i class="fa-solid fa-circle-check"></i></div></div><button type="submit" class="submit-trigger" id="submitBtn"><span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i></button></form></div></div></div>
+<!-- Registration Overlay - No Payment Section, No Receipt Upload, Added Phone Number -->
+<div id="registrationPageOverlay" class="portal-page-overlay"><div class="portal-layout-box"><button class="overlay-close-btn" onclick="dismissRegistrationOverlay()"><i class="fa-solid fa-arrow-left"></i></button><div class="glass-card"><h3 class="form-heading"><i class="fa-solid fa-id-card"></i> Delegate Registration</h3><form id="delegateRegistrationForm"><div class="field-group"><label class="field-label">Full Name</label><div class="input-box-wrapper"><input type="text" id="fullName" class="control-input" placeholder="Title & full name" required><i class="fa-solid fa-user"></i></div></div><div class="field-group"><label class="field-label">Phone Number</label><div class="input-box-wrapper"><input type="tel" id="phoneNumber" class="control-input" placeholder="0803 123 4567" required><i class="fa-solid fa-phone"></i></div></div><div class="field-group"><label class="field-label">Archdeaconry</label><div class="input-box-wrapper"><select id="archdeaconry" class="control-input" onchange="cascadeParishFilter()" required><option value="" disabled selected>Select Archdeaconry</option><option value="CATHEDRAL">CATHEDRAL</option><option value="HOLY TRINITY ARCHDEACONRY">HOLY TRINITY ARCHDEACONRY</option><option value="IKOTUN-ILE ARCHDEACONRY">IKOTUN-ILE ARCHDEACONRY</option><option value="ILEMONA ARCHDEACONRY">ILEMONA ARCHDEACONRY</option><option value="OSACO ARCHDEACONRY">OSACO ARCHDEACONRY</option></select><i class="fa-solid fa-layer-group"></i></div></div><div class="field-group"><label class="field-label">Church</label><div class="input-box-wrapper"><select id="church" class="control-input" required disabled><option value="" disabled selected>Choose Archdeaconry first</option></select><i class="fa-solid fa-church"></i></div></div><div class="field-group"><label class="field-label">Designation</label><div class="input-box-wrapper"><select id="designation" class="control-input" required><option value="" disabled selected>Select Designation</option><option value="Bishop">Bishop</option><option value="Clergy">Clergy</option><option value="Diocesan Official">Diocesan Official</option><option value="Bishop's Nominee">Bishop's Nominee</option><option value="Delegate">Delegate</option></select><i class="fa-solid fa-medal"></i></div></div><div class="field-group"><label class="field-label">Gender</label><div class="gender-row"><div class="gender-btn-wrapper"><input type="radio" id="gMale" name="gender" value="Male" required><div class="gender-btn-label"><i class="fa-solid fa-mars"></i> Male</div></div><div class="gender-btn-wrapper"><input type="radio" id="gFemale" name="gender" value="Female"><div class="gender-btn-label"><i class="fa-solid fa-venus"></i> Female</div></div></div></div><button type="submit" class="submit-trigger" id="submitBtn"><span class="btn-text">Submit Registration</span><i class="fa-solid fa-paper-plane"></i></button></form></div></div></div>
 
-<!-- COMPACT SUCCESS MODAL -->
+<!-- SUCCESS MODAL -->
 <div id="successFullPageModal" class="fullpage-modal-overlay">
     <div class="success-page-mock">
         <div class="success-header">
@@ -920,19 +832,20 @@
         </div>
         <div class="delegate-name-section">
             <span class="delegate-name-label"><i class="fa-solid fa-user"></i> DELEGATE NAME</span>
-            <div class="delegate-full-name" id="popBadgeName">Rt. Rev. Dr. John Doe</div>
+            <div class="delegate-full-name" id="popBadgeName">Delegate Name</div>
         </div>
         <div class="delegate-id-section">
             <span class="delegate-label-sm"><i class="fa-solid fa-qrcode"></i> REGISTRATION ID</span>
-            <div class="delegate-id-number" id="popGeneratedId">ODS-98036</div>
+            <div class="delegate-id-number" id="popGeneratedId">ODS-00000</div>
         </div>
         <div class="info-grid-section">
-            <div class="info-row"><span class="info-label"><i class="fa-solid fa-user-tag"></i> DESIGNATION</span><span class="info-value" id="popBadgeDesignation">Clergy</span></div>
-            <div class="info-row"><span class="info-label"><i class="fa-solid fa-venus-mars"></i> GENDER</span><span class="info-value" id="popBadgeGender">Male</span></div>
-            <div class="info-row"><span class="info-label"><i class="fa-solid fa-layer-group"></i> ARCHDEACONRY</span><span class="info-value" id="popBadgeArchdeaconry">OSACO ARCHDEACONRY</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-phone"></i> PHONE</span><span class="info-value" id="popBadgePhone">—</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-user-tag"></i> DESIGNATION</span><span class="info-value" id="popBadgeDesignation">—</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-venus-mars"></i> GENDER</span><span class="info-value" id="popBadgeGender">—</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-layer-group"></i> ARCHDEACONRY</span><span class="info-value" id="popBadgeArchdeaconry">—</span></div>
         </div>
         <div class="church-full-row">
-            <div class="info-row"><span class="info-label"><i class="fa-solid fa-church"></i> CHURCH</span><span class="info-value church-name" id="popBadgeChurch">Our Saviour Ang. Church, Offa</span></div>
+            <div class="info-row"><span class="info-label"><i class="fa-solid fa-church"></i> CHURCH</span><span class="info-value church-name" id="popBadgeChurch">—</span></div>
         </div>
         <div class="modal-action-footer">
             <button class="action-button-btn primary-action" onclick="newRegistration()"><i class="fa-solid fa-plus-circle"></i> New</button>
@@ -946,14 +859,13 @@
 <script type="importmap">{ "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js" } }</script>
 <script type="module">
     import { initializeApp } from "firebase/app";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+    import { getFirestore, collection, getDocs, addDoc, serverTimestamp, query, where } from "firebase/firestore";
     const firebaseConfig = { apiKey: "AIzaSyDB9eQ7gEi18qGTGfge-Outblb8bIMULc0", authDomain: "offa-synod-26-9f367.firebaseapp.com", projectId: "offa-synod-26-9f367", storageBucket: "offa-synod-26-9f367.firebasestorage.app", messagingSenderId: "989482038996", appId: "1:989482038996:web:e7dfc8085a41201d2ded41", measurementId: "G-3N5HC1KR0F" };
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    window.db = db; window.addDoc = addDoc; window.collection = collection; window.serverTimestamp = serverTimestamp;
+    window.db = db; window.addDoc = addDoc; window.collection = collection; window.serverTimestamp = serverTimestamp; window.getDocs = getDocs; window.query = query; window.where = where;
 </script>
 <script>
-    // Church data with Title Casing for display
     const churchDataMap = {
         "CATHEDRAL": ["St. Mark'S, Offa"],
         "HOLY TRINITY ARCHDEACONRY": [
@@ -978,7 +890,7 @@
         ]
     };
 
-    let base64ReceiptData = "", isSubmitting = false;
+    let isSubmitting = false;
     
     function showToast(msg, isError = false) {
         const toast = document.getElementById('toastMsg');
@@ -993,45 +905,6 @@
         return str.replace(/\w\S*/g, function(txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
-    }
-    
-    function compressImage(file, maxWidth, maxHeight, quality) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (e) => {
-                const img = new Image();
-                img.src = e.target.result;
-                img.onload = () => {
-                    let width = img.width, height = img.height;
-                    if (width > maxWidth) { height = (height * maxWidth) / width; width = maxWidth; }
-                    if (height > maxHeight) { width = (width * maxHeight) / height; height = maxHeight; }
-                    const canvas = document.createElement('canvas');
-                    canvas.width = width; canvas.height = height;
-                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL('image/jpeg', quality));
-                };
-                img.onerror = reject;
-            };
-            reader.onerror = reject;
-        });
-    }
-    
-    async function handleImageUpload(file) {
-        const previewContainer = document.getElementById('previewContainer');
-        const imgPreview = document.getElementById('imagePreview');
-        const fileNameSpan = document.getElementById('fileNameLabel');
-        if (!file) { previewContainer.style.display = 'none'; base64ReceiptData = ""; return; }
-        if (!file.type.match('image.*')) { showToast("Please select a valid image file", true); document.getElementById('paymentReceipt').value = ''; return; }
-        fileNameSpan.textContent = file.name.length > 25 ? file.name.substring(0, 22) + '...' : file.name;
-        try {
-            let quality = 0.7, maxWidth = 800, maxHeight = 800;
-            if (file.size > 1.5 * 1024 * 1024) { quality = 0.5; maxWidth = 600; maxHeight = 600; }
-            const compressedBase64 = await compressImage(file, maxWidth, maxHeight, quality);
-            base64ReceiptData = compressedBase64;
-            imgPreview.src = compressedBase64;
-            previewContainer.style.display = 'flex';
-        } catch(err) { showToast("Error processing image", true); base64ReceiptData = ""; }
     }
     
     function launchRegistrationOverlay() { 
@@ -1091,6 +964,28 @@
         } 
     }
     
+    async function checkDuplicateRegistration(fullName, phoneNumber) {
+        try {
+            const nameQuery = query(window.collection(window.db, "synod_delegates"), window.where("fullName", "==", fullName));
+            const phoneQuery = query(window.collection(window.db, "synod_delegates"), window.where("phoneNumber", "==", phoneNumber));
+            const [nameSnapshot, phoneSnapshot] = await Promise.all([
+                window.getDocs(nameQuery),
+                window.getDocs(phoneQuery)
+            ]);
+            
+            if (!nameSnapshot.empty) {
+                return { isDuplicate: true, message: "A delegate with this full name has already registered." };
+            }
+            if (!phoneSnapshot.empty) {
+                return { isDuplicate: true, message: "This phone number has already been used for registration." };
+            }
+            return { isDuplicate: false, message: null };
+        } catch (err) {
+            console.error("Duplicate check error:", err);
+            return { isDuplicate: false, message: null };
+        }
+    }
+    
     function newRegistration() {
         document.getElementById('successFullPageModal').classList.remove('active');
         launchRegistrationOverlay();
@@ -1099,23 +994,48 @@
     window.dispatchFormAction = async function(ev){ 
         ev.preventDefault(); 
         if(isSubmitting) return; 
-        const name = document.getElementById('fullName').value; 
+        const name = document.getElementById('fullName').value.trim(); 
+        const phone = document.getElementById('phoneNumber').value.trim();
         const arch = document.getElementById('archdeaconry').value; 
         const church = document.getElementById('church').value; 
         const des = document.getElementById('designation').value; 
         const gender = document.querySelector('input[name="gender"]:checked')?.value; 
-        if(!name||!arch||!church||!des){ showToast("Please complete all fields.", true); return; } 
-        if(!base64ReceiptData){ showToast("Please upload payment receipt.", true); return; } 
+        
+        if(!name){ showToast("Please enter your full name.", true); return; } 
+        if(!phone){ showToast("Please enter your phone number.", true); return; }
+        if(!arch){ showToast("Please select your archdeaconry.", true); return; } 
+        if(!church){ showToast("Please select your church.", true); return; } 
+        if(!des){ showToast("Please select your designation.", true); return; } 
+        if(!gender){ showToast("Please select your gender.", true); return; }
+        
+        // Validate phone number format (basic Nigerian format)
+        const phoneRegex = /^(0[7-9][0-9]{9}|(\+234)[7-9][0-9]{9})$/;
+        if (!phoneRegex.test(phone) && !phoneRegex.test(phone.replace(/\s/g, ''))) {
+            showToast("Please enter a valid phone number (e.g., 08031234567 or +2348031234567)", true);
+            return;
+        }
+        
         isSubmitting = true; 
-        setButtonLoading(true); 
+        setButtonLoading(true);
+        
+        // Check for duplicate registration
+        const duplicateCheck = await checkDuplicateRegistration(name, phone);
+        if (duplicateCheck.isDuplicate) {
+            showToast(duplicateCheck.message, true);
+            isSubmitting = false;
+            setButtonLoading(false);
+            return;
+        }
+        
         const regId = "ODS-" + Math.floor(90000 + Math.random() * 10000); 
         try{ 
             await window.addDoc(window.collection(window.db, "synod_delegates"), { 
-                fullName: name, archdeaconry: arch, church: church, designation: des, 
-                gender: gender, receiptImageBase64: base64ReceiptData, registrationId: regId, 
+                fullName: name, phoneNumber: phone, archdeaconry: arch, church: church, 
+                designation: des, gender: gender, registrationId: regId, 
                 timestamp: window.serverTimestamp(), isDeleted: false 
             });
             document.getElementById('popBadgeName').innerText = name;
+            document.getElementById('popBadgePhone').innerText = phone;
             document.getElementById('popGeneratedId').innerText = regId; 
             document.getElementById('popBadgeDesignation').innerText = des; 
             document.getElementById('popBadgeGender').innerText = gender; 
@@ -1124,12 +1044,11 @@
             document.getElementById('successFullPageModal').classList.add('active'); 
             document.getElementById('registrationPageOverlay').classList.remove('active'); 
             document.getElementById('delegateRegistrationForm').reset(); 
-            document.getElementById('previewContainer').style.display = 'none'; 
             document.getElementById('church').disabled = true; 
             document.getElementById('church').innerHTML = '<option value="" disabled selected>Choose Archdeaconry first</option>'; 
-            base64ReceiptData = ""; 
             showToast("Registration successful! Welcome to Synod 2026.", false);
         } catch(err){ 
+            console.error(err);
             showToast("Registration failed: " + err.message, true); 
         } finally{ 
             isSubmitting = false; 
@@ -1150,7 +1069,6 @@
     
     document.getElementById('delegateRegistrationForm').addEventListener('submit', window.dispatchFormAction);
     window.cascadeParishFilter = cascadeParishFilter;
-    window.handleImageUpload = handleImageUpload;
     window.launchRegistrationOverlay = launchRegistrationOverlay;
     window.dismissRegistrationOverlay = dismissRegistrationOverlay;
     window.newRegistration = newRegistration;
