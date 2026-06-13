@@ -15,6 +15,7 @@
             --card-bg: #141011;
             --gold: #cfa832;
             --gold-bright: #f4e4a6;
+            --gold-dim: #8b6914;
             --danger: #b91c1c;
             --danger-dark: #7f1a1a;
             --success: #15803d;
@@ -31,7 +32,7 @@
             padding: 1.5rem 1rem;
             min-height: 100vh;
         }
-        .admin-container { max-width: 1480px; margin: 0 auto; }
+        .admin-container { max-width: 1600px; margin: 0 auto; }
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -98,6 +99,8 @@
             border-radius: 20px;
             background: rgba(0,0,0,0.3);
             border: 1px solid var(--border-dim);
+            max-height: 70vh;
+            overflow-y: auto;
         }
         table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         th {
@@ -110,6 +113,7 @@
             border-bottom: 1px solid var(--border-dim);
             position: sticky;
             top: 0;
+            z-index: 10;
         }
         td { padding: 0.7rem 0.8rem; border-bottom: 1px solid rgba(207, 168, 50, 0.08); vertical-align: middle; }
         tr:hover td { background: rgba(207, 168, 50, 0.05); }
@@ -122,6 +126,7 @@
         .fa-trash-alt { color: #f87171; }
         .fa-trash-restore { color: #10b981; }
         .fa-trash-permanent { color: #dc2626; }
+        .fa-receipt { color: var(--gold); cursor: pointer; }
         .checkbox-col { width: 32px; text-align: center; }
         .checkbox-col input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--gold); }
         .batch-bar {
@@ -160,17 +165,46 @@
             border-left: 4px solid var(--gold); padding: 10px 18px; border-radius: 12px;
             z-index: 2100; font-weight: 500; font-size: 0.8rem; display: none;
         }
-        .tabs { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tabs { display: flex; gap: 12px; margin-bottom: 1rem; flex-wrap: wrap; }
         .tab-btn {
-            background: transparent; border: 1px solid var(--border-dim); padding: 6px 18px;
-            border-radius: 40px; cursor: pointer; font-weight: 500; font-size: 0.8rem;
+            background: rgba(30, 24, 26, 0.8);
+            border: 1px solid var(--border-dim);
+            padding: 8px 22px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
             transition: 0.2s;
+            color: var(--text-secondary);
+            backdrop-filter: blur(4px);
         }
-        .tab-btn.active { background: var(--gold); color: #0a0507; border-color: var(--gold); }
+        .tab-btn i { margin-right: 6px; }
+        .tab-btn.active { 
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            color: #0a0507;
+            border-color: var(--gold-bright);
+            box-shadow: var(--glow);
+        }
+        .tab-btn:not(.active):hover {
+            background: rgba(207, 168, 50, 0.15);
+            border-color: var(--gold);
+            color: var(--gold-bright);
+            transform: translateY(-1px);
+        }
+        .receipt-viewer {
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: auto;
+        }
+        .receipt-viewer img, .receipt-viewer iframe {
+            max-width: 100%;
+            border-radius: 12px;
+        }
         @media (max-width: 760px) {
             th, td { font-size: 0.7rem; padding: 0.5rem; }
             .action-icons i { font-size: 0.85rem; margin: 0 2px; }
             .btn { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+            .tab-btn { padding: 5px 14px; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -191,8 +225,8 @@
     </div>
 
     <div class="tabs">
-        <button class="tab-btn active" data-view="active">📋 Active Delegates</button>
-        <button class="tab-btn" data-view="deleted">🗑️ Deleted (Restore Available)</button>
+        <button class="tab-btn active" data-view="active"><i class="fa-solid fa-users"></i> Active Delegates</button>
+        <button class="tab-btn" data-view="deleted"><i class="fa-solid fa-trash-can"></i> Deleted (Restore Available)</button>
     </div>
 
     <div id="batchBar" class="batch-bar" style="display: none;">
@@ -207,15 +241,15 @@
     <div class="table-wrapper">
         <table id="delegateTable">
             <thead>
-                <tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Full Name</th><th>Phone Number</th><th>Gender</th><th>Archdeaconry</th><th>Church</th><th>Designation</th><th>Actions</th></tr>
+                <tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Full Name</th><th>Phone</th><th>Gender</th><th>Archdeaconry</th><th>Church</th><th>Designation</th><th>Receipt</th><th>Actions</th></tr>
             </thead>
-            <tbody id="tableBody"><tr><td colspan="9" style="text-align:center;">Loading delegate records...</td></tr>
+            <tbody id="tableBody"><tr><td colspan="10" style="text-align:center;">Loading delegate records...</td></tr>
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- Create/Edit Modal (Matches index.html fields) -->
+<!-- Create/Edit Modal -->
 <div id="entryModal" class="modal-overlay"><div class="modal-card"><h3 id="modalTitle"><i class="fa-solid fa-user-plus"></i> Create New Delegate</h3>
 <form id="entryForm"><input type="hidden" id="editDocId">
 <div class="form-group"><label>Full Name</label><input type="text" id="fullName" required placeholder="Title & full name"></div>
@@ -226,6 +260,9 @@
 <div class="form-group"><label>Gender</label><select id="gender"><option>Male</option><option>Female</option></select></div>
 <div class="modal-actions"><button type="button" class="btn btn-outline" id="closeModalBtn">Cancel</button><button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Save</button></div>
 </form></div></div>
+
+<!-- Receipt Viewer Modal -->
+<div id="receiptModal" class="modal-overlay"><div class="modal-card" style="max-width: 600px;"><h3><i class="fa-solid fa-receipt"></i> Payment Receipt</h3><div id="receiptContent" style="text-align: center; margin: 20px 0;"></div><div class="modal-actions"><button class="btn btn-outline" id="closeReceiptBtn">Close</button></div></div></div>
 
 <!-- Confirm Permanent Delete Modal -->
 <div id="confirmPermanentModal" class="modal-overlay"><div class="modal-card" style="max-width:400px; text-align:center;"><h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);"></i> Permanent Delete</h3><p style="margin:15px 0; color:var(--text-secondary);">This action <strong>cannot be undone</strong>. The record will be permanently removed from the database.</p><p id="permDeleteCount" style="font-weight:bold; margin-bottom:15px;"></p><div class="modal-actions"><button class="btn btn-outline" id="cancelPermBtn">Cancel</button><button class="btn btn-danger" id="confirmPermBtn">Permanently Delete</button></div></div></div>
@@ -273,6 +310,8 @@
                     church: data.church || "", 
                     designation: data.designation || "", 
                     registrationId: data.registrationId || "", 
+                    receiptBase64: data.receiptBase64 || null,
+                    paymentAmount: data.paymentAmount || 10000,
                     timestamp: data.timestamp, 
                     isDeleted: data.isDeleted === true 
                 });
@@ -298,6 +337,22 @@
         });
     }
 
+    function viewReceipt(receiptBase64, fileName) {
+        const receiptContent = document.getElementById('receiptContent');
+        if (!receiptBase64) {
+            receiptContent.innerHTML = '<p style="color: var(--text-secondary);">No receipt uploaded for this delegate.</p>';
+        } else {
+            if (receiptBase64.startsWith('data:application/pdf')) {
+                receiptContent.innerHTML = `<iframe src="${receiptBase64}" width="100%" height="400px" style="border: none; border-radius: 8px;"></iframe>`;
+            } else if (receiptBase64.startsWith('data:image')) {
+                receiptContent.innerHTML = `<img src="${receiptBase64}" alt="Payment Receipt" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">`;
+            } else {
+                receiptContent.innerHTML = '<p style="color: var(--text-secondary);">Receipt format not supported for preview.</p>';
+            }
+        }
+        document.getElementById('receiptModal').classList.add('active');
+    }
+
     function renderGroupedTable() {
         const filterText = document.getElementById('searchInput').value.toLowerCase();
         let dataToShow = currentView === "active" ? allDelegates.filter(d => !d.isDeleted) : allDelegates.filter(d => d.isDeleted);
@@ -315,21 +370,23 @@
         
         let html = '';
         for(let [archName, churchMap] of archMap.entries()) {
-            html += `<tr class="group-separator"><td colspan="9"><i class="fa-solid fa-diocese"></i> ${escapeHtml(archName)}</td></tr>`;
+            html += `<tr class="group-separator"><td colspan="10"><i class="fa-solid fa-diocese"></i> ${escapeHtml(archName)}</td></tr>`;
             for(let [churchName, delegatesList] of churchMap.entries()) {
-                html += `<tr class="subgroup-row"><td colspan="9"><i class="fa-solid fa-church"></i> ${escapeHtml(churchName)}</td></tr>`;
+                html += `<tr class="subgroup-row"><td colspan="10"><i class="fa-solid fa-church"></i> ${escapeHtml(churchName)}</td></tr>`;
                 for(let del of delegatesList) {
                     const isChecked = selectedIds.has(del.id) ? 'checked' : '';
                     const deletedClass = del.isDeleted ? 'deleted-row' : '';
+                    const hasReceipt = del.receiptBase64 ? true : false;
                     html += `<tr class="${deletedClass}" data-id="${del.id}">
                         <td class="checkbox-col"><input type="checkbox" class="delegate-checkbox" data-id="${del.id}" ${isChecked}></td>
-                        <td style="font-family:monospace;">${escapeHtml(del.registrationId || del.id.slice(0,8))}</td>
+                        <td style="font-family:monospace; font-size:0.7rem;">${escapeHtml(del.registrationId || del.id.slice(0,8))}</td>
                         <td><strong>${escapeHtml(del.fullName)}</strong></td>
                         <td>${escapeHtml(del.phoneNumber)}</td>
                         <td>${escapeHtml(del.gender)}</td>
                         <td>${escapeHtml(del.archdeaconry)}</td>
                         <td>${escapeHtml(del.church)}</td>
                         <td>${escapeHtml(del.designation)}</td>
+                        <td style="text-align:center;">${hasReceipt ? `<i class="fa-solid fa-receipt" onclick="window.viewReceiptById('${del.id}')" style="cursor:pointer; font-size:1.1rem; color:var(--gold);" title="View Receipt"></i>` : `<span style="color:var(--text-secondary); font-size:0.7rem;">No receipt</span>`}</td>
                         <td class="action-icons">
                             ${!del.isDeleted ? 
                                 `<i class="fa-solid fa-edit" onclick="window.openEdit('${del.id}')" title="Edit"></i>
@@ -338,16 +395,25 @@
                                  <i class="fa-solid fa-skull-crossbones" style="color:#dc2626;" onclick="window.promptPermanentDelete('${del.id}')" title="Permanently Delete"></i>`
                             }
                         </td>
-                     </tr>`;
+                      </tr>`;
                 }
             }
         }
-        document.getElementById('tableBody').innerHTML = html || `<tr><td colspan="9" style="text-align:center;">No records found</td></tr>`;
+        document.getElementById('tableBody').innerHTML = html || `<tr><td colspan="10" style="text-align:center;">No records found</td></tr>`;
         document.getElementById('selectAllCheckbox').checked = false;
         document.getElementById('batchBar').style.display = selectedIds.size > 0 ? 'flex' : 'none';
         document.getElementById('selectedCount').innerText = selectedIds.size;
         attachCheckboxEvents();
     }
+
+    window.viewReceiptById = (id) => {
+        const delegate = allDelegates.find(d => d.id === id);
+        if (delegate && delegate.receiptBase64) {
+            viewReceipt(delegate.receiptBase64, delegate.fullName);
+        } else {
+            showToast("No receipt available for this delegate.", true);
+        }
+    };
 
     function attachCheckboxEvents() {
         document.querySelectorAll('.delegate-checkbox').forEach(cb => { cb.onchange = (e) => { const id = cb.dataset.id; if(cb.checked) selectedIds.add(id); else selectedIds.delete(id); updateStatsAndRender(); }; });
@@ -411,7 +477,7 @@
         if(editId) { 
             try { await updateDoc(doc(db, "synod_delegates", editId), data); showToast("Updated!"); } catch(err){ showToast(err.message,true); } 
         } else { 
-            try { const regId = "ODS-" + Math.floor(10000+Math.random()*90000); await addDoc(delegatesCol, { ...data, registrationId: regId }); showToast("New delegate created."); } catch(err){ showToast(err.message,true); } 
+            try { const regId = "ODS-" + Math.floor(10000+Math.random()*90000); await addDoc(delegatesCol, { ...data, registrationId: regId, paymentAmount: 10000 }); showToast("New delegate created."); } catch(err){ showToast(err.message,true); } 
         }
         document.getElementById('entryModal').classList.remove('active'); 
         document.getElementById('entryForm').reset(); 
@@ -461,8 +527,8 @@
     document.getElementById('batchExportBtn').addEventListener('click', () => { 
         if(selectedIds.size === 0) return; 
         const selectedData = allDelegates.filter(d => selectedIds.has(d.id)); 
-        let csvRows = [["ID","Full Name","Phone Number","Gender","Archdeaconry","Church","Designation","Status"]]; 
-        selectedData.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.phoneNumber, d.gender, d.archdeaconry, d.church, d.designation, d.isDeleted ? "Deleted" : "Active"]); }); 
+        let csvRows = [["ID","Full Name","Phone Number","Gender","Archdeaconry","Church","Designation","Payment Amount","Status"]]; 
+        selectedData.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.phoneNumber, d.gender, d.archdeaconry, d.church, d.designation, `₦${d.paymentAmount || 10000}`, d.isDeleted ? "Deleted" : "Active"]); }); 
         const csv = csvRows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n"); 
         const blob = new Blob(["\uFEFF"+csv], {type:"text/csv"}); 
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `batch_delegates_export.csv`; a.click(); URL.revokeObjectURL(a.href); showToast("Exported selected records."); 
@@ -473,8 +539,8 @@
     document.getElementById('exportCsvBtn').addEventListener('click', () => { 
         let dataExport = currentView === "active" ? allDelegates.filter(d => !d.isDeleted) : allDelegates.filter(d => d.isDeleted); 
         dataExport = sortByArchdeaconryAndChurch(dataExport); 
-        let csvRows = [["ID","Full Name","Phone Number","Gender","Archdeaconry","Church","Designation"]]; 
-        dataExport.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.phoneNumber, d.gender, d.archdeaconry, d.church, d.designation]); }); 
+        let csvRows = [["ID","Full Name","Phone Number","Gender","Archdeaconry","Church","Designation","Payment Amount"]]; 
+        dataExport.forEach(d => { csvRows.push([d.registrationId || d.id.slice(0,8), d.fullName, d.phoneNumber, d.gender, d.archdeaconry, d.church, d.designation, `₦${d.paymentAmount || 10000}`]); }); 
         const csv = csvRows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n"); 
         const blob = new Blob(["\uFEFF"+csv], {type:"text/csv"}); 
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `synod_${currentView}_export.csv`; a.click(); URL.revokeObjectURL(a.href); showToast(`Exported ${dataExport.length} records.`); 
@@ -489,6 +555,7 @@
     
     document.getElementById('refreshBtn').addEventListener('click', () => loadDelegates());
     document.getElementById('closeModalBtn').addEventListener('click', () => document.getElementById('entryModal').classList.remove('active'));
+    document.getElementById('closeReceiptBtn').addEventListener('click', () => document.getElementById('receiptModal').classList.remove('active'));
     
     document.querySelectorAll('.tab-btn').forEach(btn => { 
         btn.addEventListener('click', (e) => { 
